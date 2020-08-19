@@ -148,9 +148,11 @@
     let positioning = dock.style.width;
 
     let y = 0;
-    let x = positioning;
-    let moveX = 0;
+    let x = 1000 / 2;
+    let moveX = 1;
     let moveY = 10;
+
+    console.log(x);
 
     let positionDock = (e) => {
       if (e.code == 'ArrowRight') {
@@ -173,14 +175,14 @@
     let ballSimulate = () => {
       x += moveX;
       y += moveY;
-      if (y + 40 > 600 || (y <= 0 && x)) {
+      if (y + 40 > 600 || y <= 0) {
         moveY *= -1;
       }
-
-      if (y + 40 > 600 || y <= 0) {
-        moveY = 0;
+      if (x + positioning > 1000 - 12.5 || x <= 0) {
+        moveX *= -1;
       }
       ball.style.top = `${y}px`;
+      ball.style.left = `${x}px`;
     };
 
     setInterval(ballSimulate, 1000 / 60);
