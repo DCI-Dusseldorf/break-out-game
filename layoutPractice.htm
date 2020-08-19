@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="bricks-container">
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+        <div class="bricks"></div>
+      </div>
+
+      <div class="ball"></div>
+      <div class="dock"></div>
+    </div>
+  </body>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 1000px;
+      height: 600px;
+      background: lightcyan;
+      margin: 20px auto;
+      border: 3px solid #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bricks-container {
+      width: 100%;
+      height: 200px;
+      padding-top: 3px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .bricks {
+      line-height: 0px;
+      width: 82px;
+      height: 35px;
+      background: #000;
+      border: 1px solid lightcyan;
+    }
+
+    .ball {
+      height: 25px;
+      width: 25px;
+      border-radius: 25px;
+      background: #000;
+      position: absolute;
+      left: 487.5px;
+      bottom: 20px;
+    }
+
+    .dock {
+      width: 100px;
+      height: 15px;
+      background: #000;
+      bottom: 5px;
+      position: absolute;
+      left: 450px;
+      bottom: 5px;
+    }
+  </style>
+  <script>
+    let container = document.querySelector('.container');
+    let ball = document.querySelector('.ball');
+    let dock = document.querySelector('.dock');
+    let positioning = dock.style.width;
+
+    let y = 0;
+    let x = positioning;
+    let moveX = 0;
+    let moveY = 10;
+
+    let positionDock = (e) => {
+      if (e.code == 'ArrowRight') {
+        positioning += 10;
+        dock.style.left = `${positioning}px`;
+        if (positioning >= 1000 - 100) {
+          positioning -= 10;
+        }
+      }
+      if (e.code == 'ArrowLeft') {
+        positioning -= 10;
+        dock.style.left = `${positioning}px`;
+        if (positioning <= 0) {
+          positioning += 10;
+        }
+      }
+    };
+    document.onkeydown = positionDock;
+
+    let ballSimulate = () => {
+      x += moveX;
+      y += moveY;
+      if (y + 40 > 600 || (y <= 0 && x)) {
+        moveY *= -1;
+      }
+
+      if (y + 40 > 600 || y <= 0) {
+        moveY = 0;
+      }
+      ball.style.top = `${y}px`;
+    };
+
+    setInterval(ballSimulate, 1000 / 60);
+  </script>
+</html>
