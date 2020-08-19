@@ -142,9 +142,9 @@
     }
   </style>
   <script>
-    let container = document.querySelector('.container');
-    let ball = document.querySelector('.ball');
-    let dock = document.querySelector('.dock');
+    let container = document.querySelector(".container");
+    let ball = document.querySelector(".ball");
+    let dock = document.querySelector(".dock");
     let positioning = dock.style.width;
 
     let y = 0;
@@ -155,14 +155,14 @@
     console.log(x);
 
     let positionDock = (e) => {
-      if (e.code == 'ArrowRight') {
+      if (e.code == "ArrowRight") {
         positioning += 10;
         dock.style.left = `${positioning}px`;
         if (positioning >= 1000 - 100) {
           positioning -= 10;
         }
       }
-      if (e.code == 'ArrowLeft') {
+      if (e.code == "ArrowLeft") {
         positioning -= 10;
         dock.style.left = `${positioning}px`;
         if (positioning <= 0) {
