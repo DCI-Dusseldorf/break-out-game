@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body></body>
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 1000px;
+      height: 600px;
+      background: lightcyan;
+      margin: 20px auto;
+      border: 3px solid #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bricks-container {
+      width: 100%;
+      height: 200px;
+      padding-top: 3px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .bricks {
+      line-height: 0px;
+      width: 82px;
+      height: 35px;
+      background: #000;
+      border: 1px solid lightcyan;
+    }
+
+    .ball {
+      height: 25px;
+      width: 25px;
+      border-radius: 25px;
+      background: #000;
+      position: absolute;
+      left: 487.5px;
+      bottom: 20px;
+    }
+
+    .paddle {
+      width: 100px;
+      height: 15px;
+      background: #000;
+      bottom: 5px;
+      position: absolute;
+      left: 450px;
+      bottom: 5px;
+    }
+  </style>
+  <script>
+    ///////////////////////////////CREATE HTML///////////////////////////////
+    //create main container
+    let createMainContainer = document.createElement('div');
+    createMainContainer.classList.add('container');
+    document.body.append(createMainContainer);
+    //assign to variable
+    let mainContainer = document.querySelector('.container');
+
+    //create ball
+    let createBall = document.createElement('div');
+    createBall.classList.add('ball');
+    mainContainer.appendChild(createBall);
+    //assign to variable
+    let ball = document.querySelector('.ball');
+
+    //create paddle
+    let createPaddle = document.createElement('div');
+    createPaddle.classList.add('paddle');
+    mainContainer.appendChild(createPaddle);
+    //assign to variable
+    let paddle = document.querySelector('.paddle');
+
+    //create bricks container
+    let createBricksContainer = document.createElement('div');
+    createBricksContainer.classList.add('bricks-container');
+    mainContainer.appendChild(createBricksContainer);
+    //assign to variable
+    let bricksContainer = document.querySelector('.bricks-container');
+
+    //create 71 bricks
+    for (let i = 0; i <= 71; i++) {
+      let createBricks = document.createElement('div');
+      createBricks.classList.add('bricks');
+      bricksContainer.appendChild(createBricks);
+    }
+    //assign to variable
+    let bricks = document.querySelectorAll('.bricks');
+
+    ///////////////////////////////MAKE BALL MOVE///////////////////////////////
+
+    ///////////////////////////////MAKE PADDLE MOVE///////////////////////////////
+
+    ///////////////////////////////DETECT COLISSION///////////////////////////////
+  </script>
+</html>
