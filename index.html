@@ -96,13 +96,15 @@
         <div class="brick"></div>
         <div class="brick"></div>
       </div>
-      <div class="ball"></div>
+      <div id="ball"></div>
       <div id="platform"></div>
     </div>
   </body>
   <script>
-    var board = document.getElementById("platform");
-    var position = 350;
+    var ball = document.getElementById("ball");
+    let board = document.getElementById("platform");
+    let position = 350;
+
     document.addEventListener("keydown", function (e) {
       switch (e.code) {
         case "ArrowLeft":
@@ -123,5 +125,46 @@
           break;
       }
     });
+    let y = 0;
+    let x = 745 / 2;
+    let moveX = 1;
+    let moveY = 1;
+    let counter = 0;
+    document.addEventListener("keypress", function (e) {
+      if (e.code == "Space" && counter == 0) {
+        counter += 1;
+        let ballSimulate = () => {
+          x += moveX;
+          y += moveY;
+          if (
+            collideBall(board.offsetLeft, board.offsetTop, paddleW, paddleH)
+          ) {
+            moveY = -1 * Math.abs(moveY);
+          }
+          if (x + position > 745 - 12.5 || x <= 0) {
+            moveX *= -1;
+          }
+          ball.style.top = `${y}px`;
+          ball.style.left = `${x}px`;
+        };
+
+        setInterval(ballSimulate, 1000 / 60);
+      }
+    });
+
+    const ballD = ball.offsetWidth;
+    let paddleX = board.offsetLeft;
+    let paddleY = board.offsetTop;
+    const paddleW = board.offsetWidth;
+    const paddleH = board.offsetHeight;
+
+    function collideBall(paddleX, paddleY, paddleW, paddleH) {
+      return (
+        paddleX - ballD < x &&
+        paddleX + ballD + paddleW > x &&
+        paddleY - ballD < y &&
+        paddleY + ballD + paddleH
+      );
+    }
   </script>
 </html>
