@@ -4,187 +4,217 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body>
-    <div class="container">
-      <div class="bricks-container">
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
-        <div class="bricks"></div>
+    <div class="main">
+      <div class="brick-container">
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
       </div>
-
-      <div class="ball"></div>
-      <div class="dock"></div>
+      <div id="ball"></div>
+      <div id="platform"></div>
     </div>
   </body>
   <style>
     * {
-      padding: 0;
       margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
-
-    .container {
-      width: 1000px;
-      height: 600px;
-      background: lightcyan;
-      margin: 20px auto;
-      border: 3px solid #000;
+    .main {
       position: relative;
-      overflow: hidden;
+      width: 745px;
+      height: 400px;
+      background-color: aquamarine;
+      margin: 0 auto;
+      border: 1px solid black;
     }
-
-    .bricks-container {
-      width: 100%;
-      height: 200px;
-      padding-top: 3px;
+    .brick-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
-
-    .bricks {
-      line-height: 0px;
-      width: 82px;
-      height: 35px;
-      background: #000;
-      border: 1px solid lightcyan;
+    .brick {
+      border: 1px solid aquamarine;
+      background-color: black;
+      width: 60px;
+      height: 20px;
     }
-
-    .ball {
-      height: 25px;
+    #ball {
+      position: absolute;
       width: 25px;
-      border-radius: 25px;
-      background: #000;
-      position: absolute;
-      left: 487.5px;
-      bottom: 20px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: black;
+      bottom: 15px;
+      left: 50%;
     }
-
-    .dock {
-      width: 100px;
-      height: 15px;
-      background: #000;
-      bottom: 5px;
+    #platform {
+      width: 70px;
+      height: 10px;
+      border-radius: 10%;
+      background-color: black;
       position: absolute;
-      left: 450px;
       bottom: 5px;
+      left: 350px;
     }
   </style>
   <script>
-    let container = document.querySelector('.container');
-    let ball = document.querySelector('.ball');
-    let dock = document.querySelector('.dock');
-    let positioning = dock.style.width;
+    let ball = document.getElementById('ball');
+    let board = document.getElementById('platform');
+    let brick = document.querySelector('.brick');
+    let container = document.querySelector('.brick-container');
+    const bricks = document.querySelectorAll('.brick');
+    let position = 350;
 
-    let y = 0;
-    let x = 1000 / 2;
-    let moveX = 1;
-    let moveY = 10;
+    document.addEventListener('keydown', function (e) {
+      switch (e.code) {
+        case 'ArrowLeft':
+          position = position - 10;
 
-    console.log(x);
+          if (position <= 0) {
+            position = 0;
+          }
+          board.style.left = `${position}px`;
+          break;
+        case 'ArrowRight':
+          position = position + 10;
 
-    let positionDock = (e) => {
-      if (e.code == 'ArrowRight') {
-        positioning += 10;
-        dock.style.left = `${positioning}px`;
-        if (positioning >= 1000 - 100) {
-          positioning -= 10;
-        }
+          if (position >= 745 - 70) {
+            position = 745 - 70;
+          }
+          board.style.left = `${position}px`;
+          break;
       }
-      if (e.code == 'ArrowLeft') {
-        positioning -= 10;
-        dock.style.left = `${positioning}px`;
-        if (positioning <= 0) {
-          positioning += 10;
-        }
-      }
-    };
-    document.onkeydown = positionDock;
+    });
+    let y = 350;
+    let x = 745 / 2;
+    let moveX = 2;
+    let moveY = 2;
+    let counter = 0;
+    document.addEventListener('keypress', function (e) {
+      if (e.code == 'Space' && counter == 0) {
+        counter += 1;
+        let ballSimulate = () => {
+          x += moveX;
+          y += moveY;
+          if (
+            collideBall(board.offsetLeft, board.offsetTop, paddleW, paddleH)
+          ) {
+            moveY = -1 * Math.abs(moveY);
+          }
+          if (x > 745 - 12.5 || x <= 0) {
+            moveX *= -1;
+          }
 
-    let ballSimulate = () => {
-      x += moveX;
-      y += moveY;
-      if (y + 40 > 600 || y <= 0) {
-        moveY *= -1;
-      }
-      if (x + positioning > 1000 - 12.5 || x <= 0) {
-        moveX *= -1;
-      }
-      ball.style.top = `${y}px`;
-      ball.style.left = `${x}px`;
-    };
+          bricks.forEach((brick) => {
+            if (brick.style.visibility === 'hidden') {
+              return;
+            }
+            const collidebrick = collideBall(
+              brick.offsetLeft,
+              brick.offsetTop,
+              brick.offsetWidth,
+              brick.offsetHeight
+            );
 
-    setInterval(ballSimulate, 1000 / 60);
+            if (collidebrick) {
+              moveY = Math.abs(moveY);
+              brick.style.visibility = 'hidden';
+            }
+          });
+          ball.style.top = `${y}px`;
+          ball.style.left = `${x}px`;
+        };
+
+        setInterval(ballSimulate, 1000 / 60);
+      }
+    });
+
+    const ballD = ball.offsetWidth;
+    let paddleX = board.offsetLeft;
+    let paddleY = board.offsetTop;
+    const paddleW = board.offsetWidth;
+    const paddleH = board.offsetHeight;
+
+    function collideBall(paddleX, paddleY, paddleW, paddleH) {
+      return (
+        paddleX - ballD < x &&
+        paddleX + ballD + paddleW > x &&
+        paddleY - ballD < y &&
+        paddleY + ballD > y
+      );
+    }
   </script>
 </html>
