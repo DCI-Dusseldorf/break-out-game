@@ -101,8 +101,11 @@
     </div>
   </body>
   <script>
-    var ball = document.getElementById("ball");
+    let ball = document.getElementById("ball");
     let board = document.getElementById("platform");
+    let brick = document.querySelector(".brick");
+    let container = document.querySelector(".brick-container");
+    const bricks = document.querySelectorAll(".brick");
     let position = 350;
 
     document.addEventListener("keydown", function (e) {
@@ -125,10 +128,10 @@
           break;
       }
     });
-    let y = 0;
+    let y = 350;
     let x = 745 / 2;
-    let moveX = 1;
-    let moveY = 1;
+    let moveX = 2;
+    let moveY = 2;
     let counter = 0;
     document.addEventListener("keypress", function (e) {
       if (e.code == "Space" && counter == 0) {
@@ -141,9 +144,25 @@
           ) {
             moveY = -1 * Math.abs(moveY);
           }
-          if (x + position > 745 - 12.5 || x <= 0) {
+          if (x > 745 - 12.5 || x <= 0) {
             moveX *= -1;
           }
+          bricks.forEach((brick) => {
+            if (brick.style.visibility === "hidden") {
+              return;
+            }
+            const collidebrick = collideBall(
+              brick.offsetLeft,
+              brick.offsetTop,
+              brick.offsetWidth,
+              brick.offsetHeight
+            );
+
+            if (collidebrick) {
+              moveY = Math.abs(moveY);
+              brick.style.visibility = "hidden";
+            }
+          });
           ball.style.top = `${y}px`;
           ball.style.left = `${x}px`;
         };
@@ -163,7 +182,7 @@
         paddleX - ballD < x &&
         paddleX + ballD + paddleW > x &&
         paddleY - ballD < y &&
-        paddleY + ballD + paddleH
+        paddleY + ballD > y
       );
     }
   </script>

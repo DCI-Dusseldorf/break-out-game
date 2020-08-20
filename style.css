@@ -1,0 +1,46 @@
+.container {
+  margin: 0 auto;
+  padding: 0;
+  border: 5px solid black;
+  height: 500px;
+  width: 800px;
+  background-color: rgb(180, 209, 241);
+  position: relative;
+  
+}
+
+.main {
+  height: 40%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bricks {
+  margin: 0;
+  padding: 1px;
+  background-color: black;
+  height: 25px;
+  width: 46px;
+  border: 1px solid white;
+}
+
+.ball {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #2f00ff;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+}
+
+.platform {
+  height: 7px;
+  width: 60px;
+  background-color: rgb(255, 0, 0);
+  position: absolute;
+  bottom: 2px;
+  left: 48%;
+}

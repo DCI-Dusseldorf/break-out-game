@@ -1,21 +1,4 @@
-/* * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-h1 {
-  text-align: center;
-  padding: 20px;
-}
-
-canvas {
-  background: #eee;
-  display: block;
-  margin: 0 auto;
-} */
-
-. {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
