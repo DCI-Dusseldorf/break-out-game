@@ -128,14 +128,15 @@
           break;
       }
     });
-    let y = 350;
+    let y = 360;
     let x = 745 / 2;
-    let moveX = 2;
-    let moveY = 2;
+    let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+    let moveY = -2;
     let counter = 0;
     document.addEventListener("keypress", function (e) {
       if (e.code == "Space" && counter == 0) {
         counter += 1;
+
         let ballSimulate = () => {
           x += moveX;
           y += moveY;
@@ -180,9 +181,9 @@
     function collideBall(paddleX, paddleY, paddleW, paddleH) {
       return (
         paddleX - ballD < x &&
-        paddleX + ballD + paddleW > x &&
+        paddleX + paddleW > x &&
         paddleY - ballD < y &&
-        paddleY + ballD > y
+        paddleY > y
       );
     }
   </script>
