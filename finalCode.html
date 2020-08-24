@@ -43,8 +43,8 @@
     }
 
     .ball {
-      height: 25px;
-      width: 25px;
+      height: 15px;
+      width: 15px;
       border-radius: 25px;
       background: #000;
       position: absolute;
@@ -53,7 +53,7 @@
     }
 
     .paddle {
-      width: 100px;
+      width: 50px;
       height: 15px;
       background: #000;
       bottom: 5px;
@@ -89,7 +89,7 @@
     //assign to variable
     let bricksContainer = document.querySelector('.bricks-container');
     //create 71 bricks
-    for (let i = 0; i <= 71; i++) {
+    for (let i = 0; i <= 26; i++) {
       let createBricks = document.createElement('div');
       createBricks.classList.add('bricks');
       bricksContainer.appendChild(createBricks);
@@ -99,8 +99,9 @@
 
     //////////////////////////////VARIABLES///////////////////////////////
     let mainContainerW = mainContainer.offsetWidth;
-    let moveX = 2;
-    let moveY = 2;
+    //let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+    let moveX = -3;
+    let moveY = -2;
     let ballD = ball.offsetWidth;
     let ballX = 1000 / 2;
     let ballY = 590;
@@ -109,22 +110,27 @@
     let paddleW = paddle.offsetWidth;
     let paddleH = paddle.offsetHeight;
 
+    // let brickX = bricks.offsetWidth;
+    // let brickY = bricks.offsetHeight;
+    // let brickW = bricks.offsetWidth;
+    // let brickH = bricks.offsetHeight;
+
     let position = 487.5;
 
     ///////////////////////////////MAKE PADDLE MOVE///////////////////////////////
     let positionPaddle = (e) => {
       if (e.code == 'ArrowRight') {
-        paddleX += 10;
+        paddleX += 20;
         paddle.style.left = `${paddleX}px`;
         if (paddleX >= mainContainerW - paddleW) {
-          paddleX -= 10;
+          paddleX -= 20;
         }
       }
       if (e.code == 'ArrowLeft') {
-        paddleX -= 10;
+        paddleX -= 20;
         paddle.style.left = `${paddleX}px`;
         if (paddleX <= 0) {
-          paddleX += 10;
+          paddleX += 20;
         }
       }
     };
@@ -145,7 +151,7 @@
         if (brick.style.visibility === 'hidden') {
           return;
         }
-        const collidebrick = collideBall(
+        const collidebrick = collideBrick(
           brick.offsetLeft,
           brick.offsetTop,
           brick.offsetWidth,
@@ -153,7 +159,6 @@
         );
 
         if (collidebrick) {
-          moveY = Math.abs(moveY);
           brick.style.visibility = 'hidden';
         }
       });
@@ -164,14 +169,38 @@
 
     setInterval(ballSimulate, 1000 / 60);
 
-    ///////////////////////////////COLISSION///////////////////////////////
+    ///////////////////////////////PADDLE COLISSION///////////////////////////////
     let collideBall = (paddleX, paddleY, paddleW, paddleH) => {
       return (
-        paddleX - ballD < ballX &&
-        paddleX + ballD + paddleW > ballX &&
+        paddleX < ballX &&
+        paddleX - ballD + paddleW > ballX &&
         paddleY - ballD < ballY &&
-        paddleY + ballD + paddleH > ballY
+        paddleY - ballD / 2 + paddleH > ballY
       );
+    };
+
+    ///////////////////////////////BRICK COLISSION///////////////////////////////
+    let collideBrick = (brickX, brickY, brickW, brickH) => {
+      const br = ballD / 2;
+      const bx = ballX + br;
+      const by = ballY + br;
+      if (brickX - br < bx && brickX + br + brickW > bx) {
+        if (brickY - br < by && brickY > by) {
+          moveY = -1 * Math.abs(moveY);
+          return true;
+        } else if (brickY + brickH < by && brickY + brickH + br > by) {
+          moveY = 1 * Math.abs(moveY);
+          return true;
+        }
+      } else if (brickY < by && brickY + brickH > by) {
+        if (bx > brickX - br && bx < brickX) {
+          moveX = -1 * Math.abs(moveX);
+          return true;
+        } else if (bx > brickX + brickW && bx < brickX + brickW + br) {
+          moveX = 1 * Math.abs(moveX);
+          return true;
+        }
+      }
     };
   </script>
 </html>
