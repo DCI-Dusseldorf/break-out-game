@@ -8,14 +8,14 @@
   width: 745px;
   height: 400px;
   background-color: aquamarine;
-  margin: 0 auto;
+  margin: 20px auto;
   border: 1px solid black;
   overflow: hidden;
 }
 .brick-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 .brick {
   border: 1px solid aquamarine;
