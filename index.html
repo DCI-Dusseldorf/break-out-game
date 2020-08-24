@@ -115,7 +115,11 @@
     let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
     let moveY = -2;
     let counter = 0;
-    let message = "";
+    const ballD = ball.offsetWidth;
+    let paddleX = board.offsetLeft;
+    let paddleY = board.offsetTop;
+    const paddleW = board.offsetWidth;
+    const paddleH = board.offsetHeight;
     //Event for paddle movement while pressing left and right arrow key.
     document.addEventListener("keydown", function (e) {
       switch (e.code) {
@@ -177,13 +181,7 @@
         setInterval(ballSimulate, 1000 / 60);
       }
     });
-
-    const ballD = ball.offsetWidth;
-    let paddleX = board.offsetLeft;
-    let paddleY = board.offsetTop;
-    const paddleW = board.offsetWidth;
-    const paddleH = board.offsetHeight;
-
+    //function which checks collide of ball with the paddle
     function collideBall(paddleX, paddleY, paddleW, paddleH) {
       return (
         paddleX - ballD < x &&
@@ -192,12 +190,14 @@
         paddleY > y
       );
     }
+    //function which checks collide of ball with the bricks
     let collideBrick = (brickX, brickY, brickW, brickH) => {
       const br = ballD / 2;
       const bx = x + br;
       const by = y + br;
       const blueHitBox = brickX - br < bx && brickX + br + brickW > bx;
       const redHitBox = brickY < by && brickY + brickH > by;
+
       if (y >= 0) {
         if (blueHitBox && brickY - br < by && brickY > by) {
           moveY = -1 * Math.abs(moveY);
