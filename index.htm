@@ -71,7 +71,8 @@ function drawBricks(){
 
 function collisionDetection(){
     bricks.forEach(function(b){
-        if (!b.status) return;
+      //  if (!b.status) return;
+      return
 
         var inBricksColumn = x > b.x && x < b.x + brickW;
              inBricksRow = y > b.y && y < b.y + brickH;
@@ -122,9 +123,14 @@ function draw(){
         rightKey = rightPressed(e) ? false : rightKey;
         leftKey = leftPressed(e) ? false : leftKey;
     }
+    
+}
 
-    document.addEventListener('keyDown', keyDown, false);
-    document.addEventListener('keyUp', keyUp, false);
+//    document.addEventListener('keyDown', keyDown, false);
+// document.addEventListener('keyUp', keyUp, false);
+ 
+ 
+
 
     var maxX = canvas.width - pongW, minX = 0; pongDelta = rightKey ? 7 : leftKey ? -7 : 0;
 
@@ -134,8 +140,11 @@ function draw(){
 
     x += dx;
     y += dy;
-}
-setInterval(draw, 10);
+
+
+
+
+ setInterval(draw, 20);
 </script>
 </body>
 </html>
