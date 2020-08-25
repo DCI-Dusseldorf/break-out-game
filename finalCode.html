@@ -92,6 +92,14 @@
       left: 468px;
       bottom: 5px;
     }
+    .finishing{
+       position: absolute;
+       top: 40%;
+       left: 50%;
+       font-size: 30%;
+       color: blue;
+       transform: translate(-50%,0 );
+    }
   </style>
   <script>
     ///////////////////////////////CREATE HTML///////////////////////////////
@@ -121,9 +129,19 @@
     let createStartGame = document.createElement('h1');
     createStartGame.classList.add('start-game');
     mainContainer.appendChild(createStartGame);
+
     //assign to variable
     let startGame = document.querySelector('.start-game');
     startGame.textContent = 'Press SPACE to start!';
+
+
+    //create game finish
+    let endGame = document.createElement('div');
+    endGame.classList.add('finishing');
+    mainContainer.appendChild(endGame);
+
+
+
 
     //create paddle
     let createPaddle = document.createElement('div');
@@ -228,7 +246,7 @@
             clearInterval(timer);
 
             if (life === 0) {
-              clearInterval(timer);
+             // clearInterval(timer);
               gameOver.style.display = 'block';
               setTimeout(() => {
                 location.reload();
