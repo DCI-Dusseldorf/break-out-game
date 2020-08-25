@@ -15,11 +15,20 @@
       box-sizing: border-box;
     }
 
+    .nav-container {
+      width: 1000px;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      margin: 0 auto;
+    }
+
     .container {
       width: 1000px;
       height: 600px;
       background: lightcyan;
       margin: 20px auto;
+      padding: 5px 0;
       border: 3px solid #000;
       position: relative;
       overflow: hidden;
@@ -36,15 +45,16 @@
 
     .bricks {
       line-height: 0px;
-      width: 82px;
-      height: 35px;
+      width: 72px;
+      height: 25px;
       background: #000;
       border: 1px solid lightcyan;
+      margin: 0 5px;
     }
 
     .ball {
-      height: 25px;
-      width: 25px;
+      height: 12px;
+      width: 12px;
       border-radius: 25px;
       background: #000;
       position: absolute;
@@ -53,7 +63,7 @@
     }
 
     .paddle {
-      width: 100px;
+      width: 50px;
       height: 15px;
       background: #000;
       bottom: 5px;
@@ -70,24 +80,28 @@
     document.body.append(createMainContainer);
     //assign to variable
     let mainContainer = document.querySelector('.container');
+
     //create ball
     let createBall = document.createElement('div');
     createBall.classList.add('ball');
     mainContainer.appendChild(createBall);
     //assign to variable
     let ball = document.querySelector('.ball');
+
     //create paddle
     let createPaddle = document.createElement('div');
     createPaddle.classList.add('paddle');
     mainContainer.appendChild(createPaddle);
     //assign to variable
     let paddle = document.querySelector('.paddle');
+
     //create bricks container
     let createBricksContainer = document.createElement('div');
     createBricksContainer.classList.add('bricks-container');
     mainContainer.appendChild(createBricksContainer);
     //assign to variable
     let bricksContainer = document.querySelector('.bricks-container');
+
     //create 71 bricks
     for (let i = 0; i <= 71; i++) {
       let createBricks = document.createElement('div');
@@ -99,11 +113,14 @@
 
     //////////////////////////////VARIABLES///////////////////////////////
     let mainContainerW = mainContainer.offsetWidth;
-    let moveX = 2;
-    let moveY = 2;
+    let mainContainerH = mainContainer.offsetHeight;
+    let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+    let moveY = -2;
+
     let ballD = ball.offsetWidth;
     let ballX = 1000 / 2;
     let ballY = 590;
+
     let paddleX = paddle.offsetLeft;
     let paddleY = paddle.offsetTop;
     let paddleW = paddle.offsetWidth;
@@ -114,17 +131,17 @@
     ///////////////////////////////MAKE PADDLE MOVE///////////////////////////////
     let positionPaddle = (e) => {
       if (e.code == 'ArrowRight') {
-        paddleX += 10;
+        paddleX += 20;
         paddle.style.left = `${paddleX}px`;
         if (paddleX >= mainContainerW - paddleW) {
-          paddleX -= 10;
+          paddleX -= 20;
         }
       }
       if (e.code == 'ArrowLeft') {
-        paddleX -= 10;
+        paddleX -= 20;
         paddle.style.left = `${paddleX}px`;
         if (paddleX <= 0) {
-          paddleX += 10;
+          paddleX += 20;
         }
       }
     };
@@ -134,26 +151,28 @@
     let ballSimulate = () => {
       ballX += moveX;
       ballY += moveY;
-      if (collideBall(paddleX, paddleY, paddleW, paddleH)) {
+
+      //paddle collide
+      const collidepaddle = collidePaddle(paddleX, paddleY, paddleW, paddleH);
+      if (collidepaddle) {
         moveY = -1 * Math.abs(moveY);
       }
       if (ballX > mainContainerW - 25 || ballX <= 0) {
         moveX *= -1;
       }
 
+      //bricks collide
       bricks.forEach((brick) => {
         if (brick.style.visibility === 'hidden') {
           return;
         }
-        const collidebrick = collideBall(
+        const collidebrick = collideBrick(
           brick.offsetLeft,
           brick.offsetTop,
-          brick.offsetWidth,
+          brick.offsetWidth - 10,
           brick.offsetHeight
         );
-
         if (collidebrick) {
-          moveY = Math.abs(moveY);
           brick.style.visibility = 'hidden';
         }
       });
@@ -164,14 +183,49 @@
 
     setInterval(ballSimulate, 1000 / 60);
 
-    ///////////////////////////////COLISSION///////////////////////////////
-    let collideBall = (paddleX, paddleY, paddleW, paddleH) => {
+    ///////////////////////////////PADDLE COLISSION///////////////////////////////
+    let collidePaddle = (paddleX, paddleY, paddleW, paddleH) => {
       return (
-        paddleX - ballD < ballX &&
-        paddleX + ballD + paddleW > ballX &&
+        paddleX < ballX &&
+        paddleX - ballD + paddleW > ballX &&
         paddleY - ballD < ballY &&
-        paddleY + ballD + paddleH > ballY
+        paddleY - ballD / 2 + paddleH > ballY
       );
+    };
+
+    ///////////////////////////////BRICK COLISSION///////////////////////////////
+    let collideBrick = (brickX, brickY, brickW, brickH) => {
+      const br = ballD / 2;
+      const bx = ballX + br;
+      const by = ballY + br;
+      const blueHitBox = brickX - br < bx && brickX + br + brickW > bx;
+      const redHitBox = brickY < by && brickY + brickH > by;
+
+      if (ballY >= 0) {
+        if (blueHitBox && brickY - br < by && brickY > by) {
+          moveY = -1 * Math.abs(moveY);
+          return true;
+        } else if (
+          blueHitBox &&
+          brickY + brickH < by &&
+          brickY + brickH + br > by
+        ) {
+          moveY = 1 * Math.abs(moveY);
+          return true;
+        } else if (redHitBox && bx > brickX - br && bx < brickX) {
+          moveX = -1 * Math.abs(moveX);
+          return true;
+        } else if (
+          redHitBox &&
+          bx > brickX + brickW &&
+          bx < brickX + brickW + br
+        ) {
+          moveX = 1 * Math.abs(moveX);
+          return true;
+        }
+      } else {
+        moveY = 1 * Math.abs(moveY);
+      }
     };
   </script>
 </html>
