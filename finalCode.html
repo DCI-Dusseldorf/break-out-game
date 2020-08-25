@@ -43,6 +43,27 @@
       justify-content: center;
     }
 
+    .game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-size: 50px;
+      color: darkred;
+      display: none;
+      z-index: 5;
+    }
+
+    .start-game {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-size: 50px;
+      color: green;
+      z-index: 5;
+    }
+
     .bricks {
       line-height: 0px;
       width: 72px;
@@ -68,7 +89,7 @@
       background: #000;
       bottom: 5px;
       position: absolute;
-      left: 450px;
+      left: 468px;
       bottom: 5px;
     }
   </style>
@@ -87,6 +108,22 @@
     mainContainer.appendChild(createBall);
     //assign to variable
     let ball = document.querySelector('.ball');
+
+    //create game over
+    let createGameOver = document.createElement('h1');
+    createGameOver.classList.add('game-over');
+    mainContainer.appendChild(createGameOver);
+    //assign to variable
+    let gameOver = document.querySelector('.game-over');
+    gameOver.textContent = 'GAME OVER!';
+
+    //create start game
+    let createStartGame = document.createElement('h1');
+    createStartGame.classList.add('start-game');
+    mainContainer.appendChild(createStartGame);
+    //assign to variable
+    let startGame = document.querySelector('.start-game');
+    startGame.textContent = 'Press SPACE to start!';
 
     //create paddle
     let createPaddle = document.createElement('div');
@@ -114,6 +151,14 @@
     //////////////////////////////VARIABLES///////////////////////////////
     let mainContainerW = mainContainer.offsetWidth;
     let mainContainerH = mainContainer.offsetHeight;
+
+    let counter = 0;
+    let life = 3;
+    console.log(life);
+    let score = 0;
+
+    let timer = null;
+
     let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
     let moveY = -2;
 
@@ -122,11 +167,10 @@
     let ballY = 590;
 
     let paddleX = paddle.offsetLeft;
+    const paddleXDefault = paddle.offsetLeft;
     let paddleY = paddle.offsetTop;
     let paddleW = paddle.offsetWidth;
     let paddleH = paddle.offsetHeight;
-
-    let position = 487.5;
 
     ///////////////////////////////MAKE PADDLE MOVE///////////////////////////////
     let positionPaddle = (e) => {
@@ -144,44 +188,93 @@
           paddleX += 20;
         }
       }
+      if (timer != null) {
+        ballX = paddleX;
+        ball.style.left = `${ballX}px`;
+      }
     };
     document.onkeydown = positionPaddle;
 
-    ///////////////////////////////BALL SIMULATION///////////////////////////////
-    let ballSimulate = () => {
-      ballX += moveX;
-      ballY += moveY;
-
-      //paddle collide
-      const collidepaddle = collidePaddle(paddleX, paddleY, paddleW, paddleH);
-      if (collidepaddle) {
-        moveY = -1 * Math.abs(moveY);
-      }
-      if (ballX > mainContainerW - 25 || ballX <= 0) {
-        moveX *= -1;
-      }
-
-      //bricks collide
-      bricks.forEach((brick) => {
-        if (brick.style.visibility === 'hidden') {
-          return;
-        }
-        const collidebrick = collideBrick(
-          brick.offsetLeft,
-          brick.offsetTop,
-          brick.offsetWidth - 10,
-          brick.offsetHeight
-        );
-        if (collidebrick) {
-          brick.style.visibility = 'hidden';
-        }
-      });
-
-      ball.style.top = `${ballY}px`;
-      ball.style.left = `${ballX}px`;
+    ///////////////////////////////RESET BALL POSITION///////////////////////////////
+    let ballReset = () => {
+      ballX = 1000 / 2;
+      ballY = 590;
+      paddleX = paddleXDefault;
+      moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+      moveY = -2;
     };
 
-    setInterval(ballSimulate, 1000 / 60);
+    ///////////////////////////////BALL SIMULATION///////////////////////////////
+    document.addEventListener('keyup', (e) => {
+      if (e.code === 'Space' && counter === 0) {
+        counter += 1;
+        //remove instructions
+        startGame.style.display = 'none';
+        //ball simulate
+        let ballSimulate = () => {
+          ballX += moveX;
+          ballY += moveY;
+
+          //paddle collide
+          const collidepaddle = collidePaddle(
+            paddleX,
+            paddleY,
+            paddleW,
+            paddleH
+          );
+
+          if (collidepaddle) {
+            moveY = -1 * Math.abs(moveY);
+          } else if (ballY >= mainContainerH && life > 0) {
+            life -= 1;
+            ballReset();
+            // if (life === 3 && ballY >= mainContainerH) {
+            //   life = 2;
+            //   // ballX = 1000 / 2;
+            //   // ballY = 590;
+            //   // paddleX = paddle.offsetLeft;
+            //   // paddleY = paddle.offsetTop;
+            //   // console.log(paddleX, paddleY, ballX, ballY);
+            //   console.log(life);
+            // }
+            if (life === 0) {
+              clearInterval(timer);
+              gameOver.style.display = 'block';
+              setTimeout(() => {
+                location.reload();
+              }, 3000);
+            }
+            //location.reload();
+            //console.log(life);
+            // console.log('Game over');
+          }
+          if (ballX > mainContainerW - 25 || ballX <= 0) {
+            moveX *= -1;
+          }
+
+          //bricks collide
+          bricks.forEach((brick) => {
+            if (brick.style.visibility === 'hidden') {
+              return;
+            }
+            const collidebrick = collideBrick(
+              brick.offsetLeft,
+              brick.offsetTop,
+              brick.offsetWidth - 10,
+              brick.offsetHeight
+            );
+            if (collidebrick) {
+              brick.style.visibility = 'hidden';
+            }
+          });
+
+          ball.style.top = `${ballY}px`;
+          ball.style.left = `${ballX}px`;
+        };
+
+        timer = setInterval(ballSimulate, 1000 / 60);
+      }
+    });
 
     ///////////////////////////////PADDLE COLISSION///////////////////////////////
     let collidePaddle = (paddleX, paddleY, paddleW, paddleH) => {
