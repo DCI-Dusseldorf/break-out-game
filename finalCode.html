@@ -164,7 +164,7 @@
 
     let ballD = ball.offsetWidth;
     let ballX = 1000 / 2;
-    let ballY = 590;
+    let ballY = 562;
 
     let paddleX = paddle.offsetLeft;
     const paddleXDefault = paddle.offsetLeft;
@@ -188,18 +188,14 @@
           paddleX += 20;
         }
       }
-      if (timer != null) {
-        ballX = paddleX;
-        ball.style.left = `${ballX}px`;
-      }
     };
     document.onkeydown = positionPaddle;
 
     ///////////////////////////////RESET BALL POSITION///////////////////////////////
     let ballReset = () => {
-      ballX = 1000 / 2;
-      ballY = 590;
-      paddleX = paddleXDefault;
+      ballX = 975 / 2;
+      ballY = 562;
+      paddle.style.left = `${paddleXDefault}px`;
       moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
       moveY = -2;
     };
@@ -227,16 +223,10 @@
             moveY = -1 * Math.abs(moveY);
           } else if (ballY >= mainContainerH && life > 0) {
             life -= 1;
+            counter = 0;
             ballReset();
-            // if (life === 3 && ballY >= mainContainerH) {
-            //   life = 2;
-            //   // ballX = 1000 / 2;
-            //   // ballY = 590;
-            //   // paddleX = paddle.offsetLeft;
-            //   // paddleY = paddle.offsetTop;
-            //   // console.log(paddleX, paddleY, ballX, ballY);
-            //   console.log(life);
-            // }
+            clearInterval(timer);
+
             if (life === 0) {
               clearInterval(timer);
               gameOver.style.display = 'block';
@@ -244,9 +234,6 @@
                 location.reload();
               }, 3000);
             }
-            //location.reload();
-            //console.log(life);
-            // console.log('Game over');
           }
           if (ballX > mainContainerW - 25 || ballX <= 0) {
             moveX *= -1;
