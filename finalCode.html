@@ -136,9 +136,11 @@
 
 
     //create game finish
-    let endGame = document.createElement('div');
+    let createEndGame = document.createElement('div');
     endGame.classList.add('finishing');
-    mainContainer.appendChild(endGame);
+    mainContainer.appendChild(createEndGame);
+
+    let endGame = document.querySelector('.finishing');
 
 
 
@@ -217,6 +219,12 @@
       moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
       moveY = -2;
     };
+
+
+
+    // let gameFinishing = () => {
+    //   if (bricks.length === 0)
+    // }
 
     ///////////////////////////////BALL SIMULATION///////////////////////////////
     document.addEventListener('keyup', (e) => {
