@@ -15,12 +15,20 @@
       box-sizing: border-box;
     }
 
-    .nav-container {
+    .header-container {
       width: 1000px;
       display: flex;
       justify-content: space-between;
       padding: 15px 0;
       margin: 0 auto;
+    }
+
+    .score {
+      color: green;
+    }
+
+    .lives {
+      color: red;
     }
 
     .container {
@@ -82,6 +90,7 @@
       background: #000;
       border: 1px solid lightcyan;
       margin: 0 5px;
+      visibility: visible;
     }
 
     .ball {
@@ -105,7 +114,33 @@
     }
   </style>
   <script>
+    let life = 3;
+    let score = 0;
+
     ///////////////////////////////CREATE HTML///////////////////////////////
+    //create header container
+    let createHeaderContainer = document.createElement('div');
+    createHeaderContainer.classList.add('header-container');
+    document.body.append(createHeaderContainer);
+    //assign to variable
+    let headerContainer = document.querySelector('.header-container');
+
+    //create score in header
+    let createScoreLabel = document.createElement('h2');
+    createScoreLabel.classList.add('score');
+    headerContainer.appendChild(createScoreLabel);
+    //assign to variable
+    let scoreLabel = document.querySelector('.score');
+    scoreLabel.textContent = `Score: ${score}`;
+
+    //create score in header
+    let createLivesLabel = document.createElement('h2');
+    createLivesLabel.classList.add('lives');
+    headerContainer.appendChild(createLivesLabel);
+    //assign to variable
+    let livesLabel = document.querySelector('.lives');
+    livesLabel.textContent = `Lives: ${life}`;
+
     //create main container
     let createMainContainer = document.createElement('div');
     createMainContainer.classList.add('container');
@@ -173,13 +208,13 @@
     let mainContainerH = mainContainer.offsetHeight;
 
     let counter = 0;
-    let life = 3;
+
     console.log(life);
-    let score = 0;
 
     let timer = null;
 
-    let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+    //let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+    let moveX = 2;
     let moveY = -2;
 
     let ballD = ball.offsetWidth;
@@ -226,8 +261,20 @@
     };
 
     ///////////////////////////////GAME FINISHING///////////////////////////////
+    let finishCounter = 0;
     let gameFinish = () => {
-      if (bricks.length === 0) {
+      finishCounter = 0;
+      // let bricksArray = Array.prototype.slice.call(bricks);
+      bricks.forEach((b) => {
+        if (b.style.visibility === 'hidden') {
+          console.log(b.style.visibility);
+          finishCounter++;
+        }
+      });
+      console.log(finishCounter, bricks.length);
+      if (finishCounter === bricks.length) {
+        ballReset();
+        clearInterval(timer);
         endGame.style.display = 'block';
         setTimeout(() => {
           location.reload();
@@ -259,6 +306,7 @@
           } else if (ballY >= mainContainerH && life > 0) {
             life -= 1;
             counter = 0;
+            livesLabel.textContent = `Lives: ${life}`;
             ballReset();
             clearInterval(timer);
 
@@ -275,6 +323,13 @@
 
           //bricks collide
           bricks.forEach((brick) => {
+            let r = 1 + Math.random() * 255;
+            let g = 1 + Math.random() * 255;
+            let b = 1 + Math.random() * 255;
+            let brickColor = `rgb(${r},${g},${b})`;
+
+            brick.style.backgroundColor = brickColor;
+
             if (brick.style.visibility === 'hidden') {
               return;
             }
@@ -285,6 +340,8 @@
               brick.offsetHeight
             );
             if (collidebrick) {
+              score += 20;
+              scoreLabel.textContent = `Score: ${score}`;
               brick.style.visibility = 'hidden';
             }
           });
@@ -294,8 +351,6 @@
         };
 
         timer = setInterval(ballSimulate, 1000 / 60);
-
-        gameFinish();
       }
     });
 
