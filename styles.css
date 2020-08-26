@@ -6,11 +6,19 @@
 .main {
   position: relative;
   width: 1000px;
-  height: 400px;
-  background-color: aquamarine;
+  height: 500px;
+  background: rgb(31, 92, 159);
+  background: linear-gradient(
+    90deg,
+    rgba(31, 92, 159, 1) 0%,
+    rgba(27, 22, 111, 1) 99%
+  );
   margin: 20px auto;
   border: 1px solid black;
   overflow: hidden;
+  /* background-image: url(space.jpg); */
+  /* background-size: cover; */
+  border-radius: 20px;
 }
 .brick-container {
   display: flex;
@@ -20,30 +28,64 @@
   justify-content: center;
 }
 .brick {
-  border: 1px solid aquamarine;
+  border: 1px solid rgb(248, 250, 249);
   background-color: black;
   width: 60px;
   height: 20px;
+  border-radius: 10px;
 }
 #ball {
   position: absolute;
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
+  background-color: #ff006a;
+  border: 1px solid red;
   transform: translate(-50%, 0);
-  background-color: black;
   bottom: 15px;
   left: 534px;
+  box-shadow: 0px 0px 15px #e78a11;
 }
 #platform {
   width: 70px;
   height: 10px;
-  border-radius: 10%;
-
-  background-color: black;
+  border-radius: 10px;
+  background: rgb(255, 0, 106);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 106, 1) 0%,
+    rgba(255, 95, 45, 1) 10%,
+    rgba(255, 165, 0, 1) 90%,
+    rgba(255, 0, 106, 1) 100%
+  );
+  border: 1px solid red;
   position: absolute;
   bottom: 5px;
   left: 50%;
+}
+.score {
+  color: green;
+}
+
+.lives {
+  color: red;
+}
+.header-container {
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  margin: 0 auto;
+}
+
+.start-game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 50px;
+  color: green;
+  z-index: 5;
 }
 .game-over {
   position: absolute;
@@ -64,4 +106,55 @@
   transform: translate(-50%, 0);
   z-index: 5;
   display: none;
+}
+/* animation part */
+@keyframes particleAnimation {
+  from {
+    left: -100px;
+  }
+  to {
+    left: calc(100% + 100px);
+  }
+}
+
+body {
+  background: black;
+}
+
+.p {
+  position: fixed;
+  left: 0px;
+  top: 50px;
+  width: 1px;
+  height: 1px;
+  background-color: white;
+  position: fixed;
+  animation-name: particleAnimation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.p::before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 100px;
+  right: 1px;
+  top: 0px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+}
+.p-1 {
+  animation-duration: 10s;
+}
+.p-2 {
+  animation-duration: 5s;
+  top: 60%;
+}
+.p-3 {
+  animation-duration: 20s;
+  top: 90%;
 }
