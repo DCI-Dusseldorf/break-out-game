@@ -64,6 +64,17 @@
       z-index: 5;
     }
 
+    .finishing {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 50px;
+      color: blue;
+      transform: translate(-50%, 0);
+      z-index: 5;
+      display: none;
+    }
+
     .bricks {
       line-height: 0px;
       width: 72px;
@@ -91,14 +102,6 @@
       position: absolute;
       left: 468px;
       bottom: 5px;
-    }
-    .finishing{
-       position: absolute;
-       top: 40%;
-       left: 50%;
-       font-size: 30%;
-       color: blue;
-       transform: translate(-50%,0 );
     }
   </style>
   <script>
@@ -129,21 +132,17 @@
     let createStartGame = document.createElement('h1');
     createStartGame.classList.add('start-game');
     mainContainer.appendChild(createStartGame);
-
     //assign to variable
     let startGame = document.querySelector('.start-game');
     startGame.textContent = 'Press SPACE to start!';
 
-
     //create game finish
-    let createEndGame = document.createElement('div');
-    endGame.classList.add('finishing');
+    let createEndGame = document.createElement('h1');
+    createEndGame.classList.add('finishing');
     mainContainer.appendChild(createEndGame);
-
+    //assign to variable
     let endGame = document.querySelector('.finishing');
-
-
-
+    endGame.textContent = 'Congratulations!!!';
 
     //create paddle
     let createPaddle = document.createElement('div');
@@ -167,6 +166,7 @@
     }
     //assign to variable
     let bricks = document.querySelectorAll('.bricks');
+    console.log(bricks.length);
 
     //////////////////////////////VARIABLES///////////////////////////////
     let mainContainerW = mainContainer.offsetWidth;
@@ -208,6 +208,11 @@
           paddleX += 20;
         }
       }
+
+      if (!space && counter === 0) {
+        ballX = paddleX;
+        ball.style.left = `${ballX + paddleW / 2}px`;
+      }
     };
     document.onkeydown = positionPaddle;
 
@@ -220,14 +225,18 @@
       moveY = -2;
     };
 
-
-
-    // let gameFinishing = () => {
-    //   if (bricks.length === 0)
-    // }
+    ///////////////////////////////GAME FINISHING///////////////////////////////
+    let gameFinish = () => {
+      if (bricks.length === 0) {
+        endGame.style.display = 'block';
+        setTimeout(() => {
+          location.reload();
+        }, 5000);
+      }
+    };
 
     ///////////////////////////////BALL SIMULATION///////////////////////////////
-    document.addEventListener('keyup', (e) => {
+    let space = document.addEventListener('keyup', (e) => {
       if (e.code === 'Space' && counter === 0) {
         counter += 1;
         //remove instructions
@@ -254,7 +263,6 @@
             clearInterval(timer);
 
             if (life === 0) {
-             // clearInterval(timer);
               gameOver.style.display = 'block';
               setTimeout(() => {
                 location.reload();
@@ -286,7 +294,9 @@
         };
 
         timer = setInterval(ballSimulate, 1000 / 60);
-      }
+
+        gameFinish();
+       }
     });
 
     ///////////////////////////////PADDLE COLISSION///////////////////////////////
