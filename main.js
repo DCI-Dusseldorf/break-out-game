@@ -12,7 +12,7 @@ let container = document.querySelector(".brick-container");
 for (let i = 0; i <= 71; i++) {
   let createBricks = document.createElement("div");
   createBricks.classList.add("brick");
-  container.appendChild(createBricks);
+  container.append(createBricks);
 }
 //DOM Variables
 let ball = document.getElementById("ball");

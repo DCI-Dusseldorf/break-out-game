@@ -21,6 +21,9 @@
       <div id="ball"></div>
       <div id="platform"></div>
     </div>
+    <audio src="bricksound.mp3" id="sound"></audio>
+    <audio src="applause10.mp3" id="applause"></audio>
+    <audio src="casual-game-lose-sound-.mp3" id="gameLose"></audio>
   </body>
 
   <script>
@@ -33,13 +36,17 @@
     let livesLabel = document.querySelector(".lives");
     const main = document.querySelector(".main");
     let container = document.querySelector(".brick-container");
+    let sound = document.getElementById("sound");
+    let applause = document.getElementById("applause");
+    let gameLose = document.getElementById("gameLose");
 
     //create 71 bricks
-    for (let i = 0; i <= 71; i++) {
+    for (let i = 0; i <= 69; i++) {
       let createBricks = document.createElement("div");
       createBricks.classList.add("brick");
       container.appendChild(createBricks);
     }
+
     //DOM Variables
     let ball = document.getElementById("ball");
     let board = document.getElementById("platform");
@@ -131,16 +138,6 @@
     //Event to start the game while pressing the spacebar
     let space = document.addEventListener("keypress", function (e) {
       if (e.code == "Space" && counter == 0 && !gameEnd) {
-        bricks.forEach((brick) => {
-          let r = 1 + Math.random() * 255;
-          let g = 1 + Math.random() * 255;
-          let b = 1 + Math.random() * 255;
-          let brickColor = `rgb(${r},${g},${b})`;
-          if (counter == 0) {
-            brick.style.backgroundColor = brickColor;
-          }
-        });
-
         counter += 1;
         startGame.style.display = "none";
         //funtion to bounce the ball when spacebar is pressed.
@@ -186,6 +183,8 @@
           score += 20;
           scoreLabel.textContent = `Score: ${score}`;
           moveY = Math.abs(moveY);
+          sound.play();
+
           brick.style.visibility = "hidden";
           //game finish function call
           gameFinish();
@@ -200,6 +199,7 @@
       life -= 1;
       counter = 0;
       livesLabel.textContent = `Lives: ${life}`;
+      gameLose.play();
       ballReset();
       clearInterval(timer);
       if (life === 0) {
@@ -282,6 +282,7 @@
         clearInterval(timer);
         gameEnd = true;
         endGame.style.display = "block";
+        applause.play();
         setTimeout(() => {
           location.reload();
         }, 5000);
