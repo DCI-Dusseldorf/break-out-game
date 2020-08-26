@@ -28,7 +28,6 @@
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
-        <!-- <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
@@ -66,8 +65,6 @@
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
-        <div class="brick"></div> -->
-        <!-- <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
@@ -94,68 +91,160 @@
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
-        <div class="brick"></div> -->
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
       </div>
       <div id="ball"></div>
       <div id="platform"></div>
     </div>
   </body>
+
   <script>
+    //DOM Variables
     let ball = document.getElementById("ball");
     let board = document.getElementById("platform");
     let brick = document.querySelector(".brick");
     let container = document.querySelector(".brick-container");
     const bricks = document.querySelectorAll(".brick");
+    const main = document.querySelector(".main");
 
-    let position = 350; //position of the paddle
+    //create game over display
+    let createGameOver = document.createElement("h1");
+    createGameOver.classList.add("game-over");
+    main.appendChild(createGameOver);
 
-    let y = 360;
-    let x = 745 / 2;
+    //assign to variable
+    let gameOver = document.querySelector(".game-over");
+    gameOver.textContent = "GAME OVER!";
+
+    //create start game
+    let createStartGame = document.createElement("h1");
+    createStartGame.classList.add("start-game");
+    main.appendChild(createStartGame);
+
+    //assign to variable
+    let startGame = document.querySelector(".start-game");
+    startGame.textContent = "Press SPACE to start!";
+
+    //create game finish
+    let createEndGame = document.createElement("h1");
+    createEndGame.classList.add("finishing");
+    main.appendChild(createEndGame);
+    //assign to variable
+    let endGame = document.querySelector(".finishing");
+    endGame.textContent = "Congratulations!!!";
+
+    //position of the paddle, ball
+    // let position = 350;
+    let containerW = main.offsetWidth;
+    let containerH = main.offsetHeight;
+    let y = containerH - 40;
+    let x = containerW / 2;
 
     let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
     let moveY = -2;
+
+    let life = 3;
+    let timer = null;
     let counter = 0;
+
     const ballD = ball.offsetWidth;
     let paddleX = board.offsetLeft;
+    const paddleXDefault = board.offsetLeft;
     let paddleY = board.offsetTop;
     const paddleW = board.offsetWidth;
     const paddleH = board.offsetHeight;
+
     //Event for paddle movement while pressing left and right arrow key.
+
     document.addEventListener("keydown", function (e) {
       switch (e.code) {
         case "ArrowLeft":
-          position = position - 10;
+          paddleX = paddleX - 20;
 
-          if (position <= 0) {
-            position = 0;
+          if (paddleX <= 0) {
+            paddleX = 0;
           }
-          board.style.left = `${position}px`;
+          board.style.left = `${paddleX}px`;
           break;
         case "ArrowRight":
-          position = position + 10;
+          paddleX = paddleX + 20;
 
-          if (position >= 745 - 70) {
-            position = 745 - 70;
+          if (paddleX >= containerW - 70) {
+            paddleX = containerW - 70;
           }
-          board.style.left = `${position}px`;
+          board.style.left = `${paddleX}px`;
           break;
       }
+      if (!space && counter === 0) {
+        x = paddleX;
+        ball.style.left = `${x + paddleW / 2}px`;
+      }
     });
-    //Even to start the game while pressing the spacebar
-    document.addEventListener("keypress", function (e) {
+
+    //RESET BALL POSITION
+    let ballReset = () => {
+      x = containerW / 2;
+      y = containerH - 40;
+      board.style.left = `${paddleXDefault}px`;
+      moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+      moveY = -2;
+    };
+
+    //GAME FINISHING
+    let finishCounter = 0;
+    let gameFinish = () => {
+      finishCounter = 0;
+      // let bricksArray = Array.prototype.slice.call(bricks);
+      bricks.forEach((b) => {
+        if (b.style.visibility === "hidden") {
+          console.log(b.style.visibility);
+          finishCounter++;
+        }
+      });
+      console.log(finishCounter, bricks.length);
+      if (finishCounter === bricks.length) {
+        ballReset();
+        clearInterval(timer);
+        endGame.style.display = "block";
+        setTimeout(() => {
+          location.reload();
+        }, 5000);
+      }
+    };
+
+    //Event to start the game while pressing the spacebar
+    let space = document.addEventListener("keypress", function (e) {
       if (e.code == "Space" && counter == 0) {
         counter += 1;
+        startGame.style.display = "none";
         //funtion to bounce the ball when spacebar is pressed.
+
         let ballSimulate = () => {
           x += moveX;
           y += moveY;
           //condition to check the ball colliding with the paddle
           if (
-            collideBall(board.offsetLeft, board.offsetTop, paddleW, paddleH)
+            collidePaddle(board.offsetLeft, board.offsetTop, paddleW, paddleH)
           ) {
             moveY = -1 * Math.abs(moveY);
+          } else if (y >= main.offsetHeight && life > 0) {
+            life -= 1;
+            counter = 0;
+            ballReset();
+            clearInterval(timer);
+
+            if (life === 0) {
+              clearInterval(timer);
+              gameOver.style.display = "block";
+              setTimeout(() => {
+                location.reload();
+              }, 3000);
+            }
           }
-          if (x > 745 - 25 || x <= 0) {
+          if (x > containerW - 25 || x <= 0) {
             moveX *= -1;
           }
           bricks.forEach((brick) => {
@@ -172,17 +261,20 @@
             if (collidebrick) {
               moveY = Math.abs(moveY);
               brick.style.visibility = "hidden";
+              //game finish function call
+              gameFinish();
             }
           });
           ball.style.top = `${y}px`;
           ball.style.left = `${x}px`;
         };
 
-        setInterval(ballSimulate, 1000 / 60);
+        timer = setInterval(ballSimulate, 1000 / 60);
       }
     });
+
     //function which checks collide of ball with the paddle
-    function collideBall(paddleX, paddleY, paddleW, paddleH) {
+    function collidePaddle(paddleX, paddleY, paddleW, paddleH) {
       return (
         paddleX - ballD < x &&
         paddleX + paddleW > x &&

@@ -5,7 +5,7 @@
 }
 .main {
   position: relative;
-  width: 745px;
+  width: 1000px;
   height: 400px;
   background-color: aquamarine;
   margin: 20px auto;
@@ -14,8 +14,10 @@
 }
 .brick-container {
   display: flex;
+  width: 100%;
+  height: 180px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 .brick {
   border: 1px solid aquamarine;
@@ -28,16 +30,38 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  transform: translate(-50%, 0);
   background-color: black;
   bottom: 15px;
-  left: 50%;
+  left: 534px;
 }
 #platform {
   width: 70px;
   height: 10px;
   border-radius: 10%;
+
   background-color: black;
   position: absolute;
   bottom: 5px;
-  left: 350px;
+  left: 50%;
+}
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 50px;
+  color: darkred;
+  display: none;
+  z-index: 5;
+}
+.finishing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: blue;
+  transform: translate(-50%, 0);
+  z-index: 5;
+  display: none;
 }
