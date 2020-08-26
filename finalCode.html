@@ -119,6 +119,7 @@
     }
   </style>
   <script>
+    //////////////////////////////VARIABLES///////////////////////////////
     let life = 3;
     let score = 0;
 
@@ -208,14 +209,10 @@
     let bricks = document.querySelectorAll('.bricks');
     console.log(bricks.length);
 
-    //////////////////////////////VARIABLES///////////////////////////////
     let mainContainerW = mainContainer.offsetWidth;
     let mainContainerH = mainContainer.offsetHeight;
 
     let counter = 0;
-
-    console.log(life);
-
     let timer = null;
 
     let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
@@ -255,113 +252,7 @@
     };
     document.onkeydown = positionPaddle;
 
-    ///////////////////////////////RESET BALL POSITION///////////////////////////////
-    let ballReset = () => {
-      ballX = 1000 / 2;
-      ballY = 562;
-      paddle.style.left = `${paddleXDefault}px`;
-      paddleX = paddleXDefault;
-      moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
-      moveY = -2;
-    };
-
-    ///////////////////////////////GAME FINISHING///////////////////////////////
-    let finishCounter = 0;
-    let gameFinish = () => {
-      finishCounter = 0;
-      // let bricksArray = Array.prototype.slice.call(bricks);
-      bricks.forEach((b) => {
-        if (b.style.visibility === 'hidden') {
-          console.log(b.style.visibility);
-          finishCounter++;
-        }
-      });
-      console.log(finishCounter, bricks.length);
-      if (finishCounter === bricks.length) {
-        ballReset();
-        clearInterval(timer);
-        endGame.style.display = 'block';
-        setTimeout(() => {
-          location.reload();
-        }, 5000);
-      }
-    };
-
-    ///////////////////////////////BALL SIMULATION///////////////////////////////
-    let space = document.addEventListener('keyup', (e) => {
-      if (e.code === 'Space' && counter === 0) {
-        counter += 1;
-
-        //remove instructions
-        startGame.style.display = 'none';
-        //ball simulate
-        let ballSimulate = () => {
-          ballX += moveX;
-          ballY += moveY;
-
-          //paddle collide
-          const collidepaddle = collidePaddle(
-            paddleX,
-            paddleY,
-            paddleW,
-            paddleH
-          );
-
-          if (collidepaddle) {
-            moveY = -1 * Math.abs(moveY);
-          } else if (ballY >= mainContainerH && life > 0) {
-            life -= 1;
-            counter = 0;
-            livesLabel.textContent = `Lives: ${life}`;
-            ballReset();
-            clearInterval(timer);
-
-            if (life === 0) {
-              gameOver.style.display = 'block';
-              setTimeout(() => {
-                location.reload();
-              }, 3000);
-            }
-          }
-          if (ballX > mainContainerW - 25 || ballX <= 0) {
-            moveX *= -1;
-          }
-
-          //bricks collide
-          bricks.forEach((brick) => {
-            let r = 1 + Math.random() * 255;
-            let g = 1 + Math.random() * 255;
-            let b = 1 + Math.random() * 255;
-            let brickColor = `rgb(${r},${g},${b})`;
-            if (counter == 0) {
-              brick.style.backgroundColor = brickColor;
-            }
-
-            if (brick.style.visibility === 'hidden') {
-              return;
-            }
-            const collidebrick = collideBrick(
-              brick.offsetLeft,
-              brick.offsetTop,
-              brick.offsetWidth - 10,
-              brick.offsetHeight
-            );
-            if (collidebrick) {
-              score += 20;
-              scoreLabel.textContent = `Score: ${score}`;
-              brick.style.visibility = 'hidden';
-            }
-          });
-
-          ball.style.top = `${ballY}px`;
-          ball.style.left = `${ballX}px`;
-        };
-
-        timer = setInterval(ballSimulate, 750 / 60);
-      }
-    });
-
-    ///////////////////////////////PADDLE COLISSION///////////////////////////////
+    ///////////////////////////////PADDLE COLISSION FORMULA///////////////////////////////
     let collidePaddle = (paddleX, paddleY, paddleW, paddleH) => {
       return (
         paddleX < ballX &&
@@ -371,7 +262,31 @@
       );
     };
 
-    ///////////////////////////////BRICK COLISSION///////////////////////////////
+    ///////////////////////////////PADLE COLLIDE///////////////////////////////
+    let paddleCollide = () => {
+      const collidepaddle = collidePaddle(paddleX, paddleY, paddleW, paddleH);
+      if (collidepaddle) {
+        moveY = -1 * Math.abs(moveY);
+      } else if (ballY >= mainContainerH && life > 0) {
+        life -= 1;
+        counter = 0;
+        livesLabel.textContent = `Lives: ${life}`;
+        ballReset();
+        clearInterval(timer);
+
+        if (life === 0) {
+          gameOver.style.display = 'block';
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
+        }
+      }
+      if (ballX > mainContainerW - 25 || ballX <= 0) {
+        moveX *= -1;
+      }
+    };
+
+    ///////////////////////////////BRICK COLISSION FORMULA///////////////////////////////
     let collideBrick = (brickX, brickY, brickW, brickH) => {
       const br = ballD / 2;
       const bx = ballX + br;
@@ -405,5 +320,119 @@
         moveY = 1 * Math.abs(moveY);
       }
     };
+
+    ///////////////////////////////BRICKS COLLIDE///////////////////////////////
+    let bricksCollide = () => {
+      bricks.forEach((brick) => {
+        if (brick.style.visibility === 'hidden') {
+          return;
+        }
+        const collidebrick = collideBrick(
+          brick.offsetLeft,
+          brick.offsetTop,
+          brick.offsetWidth - 10,
+          brick.offsetHeight
+        );
+        if (collidebrick) {
+          if (brick.style.backgroundColor === 'gold') {
+            score += 1000;
+          } else if (brick.style.backgroundColor === 'red') {
+            score += 100;
+          } else {
+            score += 20;
+          }
+          scoreLabel.textContent = `Score: ${score}`;
+          brick.style.visibility = 'hidden';
+        }
+      });
+    };
+
+    ///////////////////////////////SIMULATE BALL///////////////////////////////
+    let ballSimulate = () => {
+      ballX += moveX;
+      ballY += moveY;
+
+      //paddle collide
+      paddleCollide();
+
+      //bricks collide
+      bricksCollide();
+
+      ball.style.top = `${ballY}px`;
+      ball.style.left = `${ballX}px`;
+    };
+
+    ///////////////////////////////RESET BALL POSITION///////////////////////////////
+    let ballReset = () => {
+      ballX = 1000 / 2;
+      ballY = 562;
+      paddle.style.left = `${paddleXDefault}px`;
+      paddleX = paddleXDefault;
+      moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
+      moveY = -2;
+    };
+
+    ///////////////////////////////GAME FINISHING///////////////////////////////
+    let finishCounter = 0;
+    let gameFinish = () => {
+      finishCounter = 0;
+      // let bricksArray = Array.prototype.slice.call(bricks);
+      bricks.forEach((b) => {
+        if (b.style.visibility === 'hidden') {
+          console.log(b.style.visibility);
+          finishCounter++;
+        }
+      });
+      console.log(finishCounter, bricks.length);
+      if (finishCounter === bricks.length) {
+        ballReset();
+        clearInterval(timer);
+        endGame.style.display = 'block';
+        setTimeout(() => {
+          location.reload();
+        }, 5000);
+      }
+    };
+
+    ///////////////////////////////CHANGE BRICK COLOR TO RED///////////////////////////////
+    let changeBrickToRed = () => {
+      const randomNum1 = Math.round(Math.random() * bricks.length);
+      const randomNum2 = Math.round(Math.random() * bricks.length);
+      const randomNum3 = Math.round(Math.random() * bricks.length);
+      const randomNum4 = Math.round(Math.random() * bricks.length);
+      const randomNum5 = Math.round(Math.random() * bricks.length);
+
+      setTimeout(() => {
+        bricks[randomNum1].style.backgroundColor = 'red';
+        bricks[randomNum2].style.backgroundColor = 'red';
+        bricks[randomNum3].style.backgroundColor = 'red';
+        bricks[randomNum4].style.backgroundColor = 'red';
+        bricks[randomNum5].style.backgroundColor = 'red';
+      }, 5000);
+    };
+
+    ///////////////////////////////CHANGE BRICK COLOR TO GOLD///////////////////////////////
+    let changeBrickToGold = () => {
+      const randomNum1 = Math.round(Math.random() * bricks.length);
+
+      setTimeout(() => {
+        bricks[randomNum1].style.backgroundColor = 'gold';
+      }, 10000);
+    };
+
+    ///////////////////////////////BALL SIMULATION///////////////////////////////
+    let space = document.addEventListener('keyup', (e) => {
+      if (e.code === 'Space' && counter === 0) {
+        counter += 1;
+        //remove instructions
+        startGame.style.display = 'none';
+        //change 5 bricks to red
+        changeBrickToRed();
+        //change brick to gold
+        changeBrickToGold();
+        //ball simulate speed
+        timer = setInterval(ballSimulate, 750 / 100);
+      }
+    });
   </script>
 </html>
