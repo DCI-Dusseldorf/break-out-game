@@ -13,10 +13,14 @@
       padding: 0;
       margin: 0;
       box-sizing: border-box;
-      background-image: url('https://rebeccabender.com/wp-content/uploads/2014/09/main-bg.jpg');
-     
+   
      
     }
+     body{
+       background-image: url('https://rebeccabender.com/wp-content/uploads/2014/09/main-bg.jpg'); 
+      background-size: cover; 
+
+    } 
 
     .header-container {
       width: 1000px;
@@ -38,15 +42,17 @@
     }
 
     .container {
-      width: 1000px;
-      height: 600px;
+      width: 10  00px;
+      height: 750px;
       background: lightcyan;
-      margin: 20px auto;
+      margin: 40px auto;
       padding: 5px 0;
       border: 3px solid #000;
       position: relative;
       overflow: hidden;
-      background-image: url('https://blog.matcharesident.com/wp-content/uploads/2019/07/iStock-944453634.jpg');
+       background-image: url('https://blog.matcharesident.com/wp-content/uploads/2019/07/iStock-944453634.jpg'); 
+      
+      
     }
 
     .bricks-container {
@@ -94,15 +100,15 @@
       line-height: 0px;
       width: 72px;
       height: 25px;
-      background: #black;
+      background: black;
       border: 1px solid lightcyan;
       margin: 0 5px;
       visibility: visible;
     }
 
     .ball {
-      height: 12px;
-      width: 12px;
+      height: 15px;
+      width: 15px;
       border-radius: 25px;
       background:  red  ;
       position: absolute;
@@ -121,7 +127,7 @@
     }
   </style>
   <script>
-    let life = 3;
+    let life = 4;
     let score = 0;
 
     ///////////////////////////////CREATE HTML///////////////////////////////
