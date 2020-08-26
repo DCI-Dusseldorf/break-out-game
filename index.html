@@ -95,6 +95,14 @@
         <div class="brick"></div>
         <div class="brick"></div>
         <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
+        <div class="brick"></div>
       </div>
       <div id="ball"></div>
       <div id="platform"></div>
@@ -102,11 +110,27 @@
   </body>
 
   <script>
+    // //create bricks container
+    // let createBricksContainer = document.createElement("div");
+    // createBricksContainer.classList.add("brick-container");
+    // main.appendChild(createBricksContainer);
+    // //assign to variable
+
+    // //create 71 bricks
+    // for (let i = 0; i <= 71; i++) {
+    //   let createBricks = document.createElement("div");
+    //   createBricks.classList.add("brick");
+    //   container.appendChild(createBricks);
+    // }
+    // //assign to variable
+    // let brick = document.querySelectorAll(".brick");
+
     //DOM Variables
     let ball = document.getElementById("ball");
     let board = document.getElementById("platform");
     let brick = document.querySelector(".brick");
     let container = document.querySelector(".brick-container");
+
     const bricks = document.querySelectorAll(".brick");
     const main = document.querySelector(".main");
 
@@ -140,8 +164,6 @@
     // let position = 350;
     let containerW = main.offsetWidth;
     let containerH = main.offsetHeight;
-    let y = containerH - 40;
-    let x = containerW / 2;
 
     let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
     let moveY = -2;
@@ -150,13 +172,15 @@
     let timer = null;
     let counter = 0;
 
+    let gameEnd = false;
     const ballD = ball.offsetWidth;
     let paddleX = board.offsetLeft;
     const paddleXDefault = board.offsetLeft;
     let paddleY = board.offsetTop;
     const paddleW = board.offsetWidth;
     const paddleH = board.offsetHeight;
-
+    let x = containerW / 2 + paddleW / 2;
+    let y = containerH - 40;
     //Event for paddle movement while pressing left and right arrow key.
 
     document.addEventListener("keydown", function (e) {
@@ -186,9 +210,10 @@
 
     //RESET BALL POSITION
     let ballReset = () => {
-      x = containerW / 2;
+      x = containerW / 2 + paddleW / 2;
       y = containerH - 40;
       board.style.left = `${paddleXDefault}px`;
+      paddleX = paddleXDefault;
       moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
       moveY = -2;
     };
@@ -208,6 +233,7 @@
       if (finishCounter === bricks.length) {
         ballReset();
         clearInterval(timer);
+        gameEnd = true;
         endGame.style.display = "block";
         setTimeout(() => {
           location.reload();
@@ -217,7 +243,7 @@
 
     //Event to start the game while pressing the spacebar
     let space = document.addEventListener("keypress", function (e) {
-      if (e.code == "Space" && counter == 0) {
+      if (e.code == "Space" && counter == 0 && !gameEnd) {
         counter += 1;
         startGame.style.display = "none";
         //funtion to bounce the ball when spacebar is pressed.
@@ -238,6 +264,7 @@
 
             if (life === 0) {
               clearInterval(timer);
+              gameEnd = true;
               gameOver.style.display = "block";
               setTimeout(() => {
                 location.reload();
