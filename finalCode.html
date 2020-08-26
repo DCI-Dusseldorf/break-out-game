@@ -6,7 +6,29 @@
     <title>Document</title>
   </head>
 
-  <body></body>
+  <body>
+    <!-- HEADER -->
+    <div class="header-container">
+      <h2 class="score">Score: 0</h2>
+      <h2 class="lives">Lives: 3</h2>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <h1 class="game-over">GAME OVER!</h1>
+      <h1 class="start-game">Hit SPACE to start!</h1>
+      <h1 class="finishing">Congratulations!!!</h1>
+      <div class="bricks-container">
+        <!-- Bricks goes here -->
+      </div>
+      <div class="ball">
+        <!-- Ball goes here -->
+      </div>
+      <div class="paddle">
+        <!-- Paddle goes here -->
+      </div>
+    </div>
+  </body>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
@@ -123,91 +145,23 @@
     let life = 3;
     let score = 0;
 
-    ///////////////////////////////CREATE HTML///////////////////////////////
-    //create header container
-    let createHeaderContainer = document.createElement('div');
-    createHeaderContainer.classList.add('header-container');
-    document.body.append(createHeaderContainer);
-    //assign to variable
     let headerContainer = document.querySelector('.header-container');
-
-    //create score in header
-    let createScoreLabel = document.createElement('h2');
-    createScoreLabel.classList.add('score');
-    headerContainer.appendChild(createScoreLabel);
-    //assign to variable
     let scoreLabel = document.querySelector('.score');
-    scoreLabel.textContent = `Score: ${score}`;
-
-    //create lives in header
-    let createLivesLabel = document.createElement('h2');
-    createLivesLabel.classList.add('lives');
-    headerContainer.appendChild(createLivesLabel);
-    //assign to variable
     let livesLabel = document.querySelector('.lives');
-    livesLabel.textContent = `Lives: ${life}`;
-
-    //create main container
-    let createMainContainer = document.createElement('div');
-    createMainContainer.classList.add('container');
-    document.body.append(createMainContainer);
-    //assign to variable
     let mainContainer = document.querySelector('.container');
-
-    //create ball
-    let createBall = document.createElement('div');
-    createBall.classList.add('ball');
-    mainContainer.appendChild(createBall);
-    //assign to variable
     let ball = document.querySelector('.ball');
-
-    //create game over
-    let createGameOver = document.createElement('h1');
-    createGameOver.classList.add('game-over');
-    mainContainer.appendChild(createGameOver);
-    //assign to variable
     let gameOver = document.querySelector('.game-over');
-    gameOver.textContent = 'GAME OVER!';
-
-    //create start game
-    let createStartGame = document.createElement('h1');
-    createStartGame.classList.add('start-game');
-    mainContainer.appendChild(createStartGame);
-    //assign to variable
     let startGame = document.querySelector('.start-game');
-    startGame.textContent = 'Hit SPACE to start!';
-
-    //create game finish
-    let createEndGame = document.createElement('h1');
-    createEndGame.classList.add('finishing');
-    mainContainer.appendChild(createEndGame);
-    //assign to variable
     let endGame = document.querySelector('.finishing');
-    endGame.textContent = 'Congratulations!!!';
-
-    //create paddle
-    let createPaddle = document.createElement('div');
-    createPaddle.classList.add('paddle');
-    mainContainer.appendChild(createPaddle);
-    //assign to variable
     let paddle = document.querySelector('.paddle');
-
-    //create bricks container
-    let createBricksContainer = document.createElement('div');
-    createBricksContainer.classList.add('bricks-container');
-    mainContainer.appendChild(createBricksContainer);
-    //assign to variable
     let bricksContainer = document.querySelector('.bricks-container');
-
     //create 71 bricks
     for (let i = 0; i <= 71; i++) {
       let createBricks = document.createElement('div');
       createBricks.classList.add('bricks');
       bricksContainer.appendChild(createBricks);
     }
-    //assign to variable
     let bricks = document.querySelectorAll('.bricks');
-    console.log(bricks.length);
 
     let mainContainerW = mainContainer.offsetWidth;
     let mainContainerH = mainContainer.offsetHeight;
@@ -230,6 +184,7 @@
 
     ///////////////////////////////MAKE PADDLE MOVE///////////////////////////////
     let positionPaddle = (e) => {
+      //make paddle move right
       if (e.code == 'ArrowRight') {
         paddleX += 20;
         paddle.style.left = `${paddleX}px`;
@@ -237,6 +192,7 @@
           paddleX -= 20;
         }
       }
+      //make paddle move left
       if (e.code == 'ArrowLeft') {
         paddleX -= 20;
         paddle.style.left = `${paddleX}px`;
@@ -244,7 +200,7 @@
           paddleX += 20;
         }
       }
-
+      //make ball move with paddle
       if (!space && counter === 0) {
         ballX = paddleX;
         ball.style.left = `${ballX + paddleW / 2 - 5}px`;
@@ -327,6 +283,7 @@
         if (brick.style.visibility === 'hidden') {
           return;
         }
+        //invoke brick collision function
         const collidebrick = collideBrick(
           brick.offsetLeft,
           brick.offsetTop,
@@ -334,14 +291,19 @@
           brick.offsetHeight
         );
         if (collidebrick) {
+          //when ball hits gold brick
           if (brick.style.backgroundColor === 'gold') {
             score += 1000;
+            //when ball hits red brick
           } else if (brick.style.backgroundColor === 'red') {
             score += 100;
+            //when ball hit normal brick
           } else {
             score += 20;
           }
+          //updates the score after hitting brick
           scoreLabel.textContent = `Score: ${score}`;
+          //hides brick when hit
           brick.style.visibility = 'hidden';
         }
       });
@@ -349,15 +311,14 @@
 
     ///////////////////////////////SIMULATE BALL///////////////////////////////
     let ballSimulate = () => {
+      //ball movement
       ballX += moveX;
       ballY += moveY;
-
       //paddle collide
       paddleCollide();
-
       //bricks collide
       bricksCollide();
-
+      //ball position
       ball.style.top = `${ballY}px`;
       ball.style.left = `${ballX}px`;
     };
@@ -401,7 +362,7 @@
       const randomNum3 = Math.round(Math.random() * bricks.length);
       const randomNum4 = Math.round(Math.random() * bricks.length);
       const randomNum5 = Math.round(Math.random() * bricks.length);
-
+      //adds 5 red brick after 5 seconds of life reset
       setTimeout(() => {
         bricks[randomNum1].style.backgroundColor = 'red';
         bricks[randomNum2].style.backgroundColor = 'red';
@@ -414,7 +375,7 @@
     ///////////////////////////////CHANGE BRICK COLOR TO GOLD///////////////////////////////
     let changeBrickToGold = () => {
       const randomNum1 = Math.round(Math.random() * bricks.length);
-
+      //adds 1 gold brick after 10 seconds of life reset
       setTimeout(() => {
         bricks[randomNum1].style.backgroundColor = 'gold';
       }, 10000);
