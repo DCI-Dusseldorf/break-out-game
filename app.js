@@ -193,11 +193,9 @@ let gameFinish = () => {
   // let bricksArray = Array.prototype.slice.call(bricks);
   bricks.forEach((b) => {
     if (b.style.visibility === 'hidden') {
-      console.log(b.style.visibility);
       finishCounter++;
     }
   });
-  console.log(finishCounter, bricks.length);
   if (finishCounter === bricks.length) {
     ballReset();
     clearInterval(timer);
