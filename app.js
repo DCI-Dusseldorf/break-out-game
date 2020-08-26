@@ -1,5 +1,5 @@
 //////////////////////////////VARIABLES///////////////////////////////
-let life = 3;
+let life = 5;
 let score = 0;
 
 let headerContainer = document.querySelector('.header-container');
@@ -12,13 +12,16 @@ let startGame = document.querySelector('.start-game');
 let endGame = document.querySelector('.finishing');
 let paddle = document.querySelector('.paddle');
 let bricksContainer = document.querySelector('.bricks-container');
-//create 71 bricks
-for (let i = 0; i <= 71; i++) {
+//create 72 bricks
+for (let i = 0; i <= 59; i++) {
   let createBricks = document.createElement('div');
   createBricks.classList.add('bricks');
   bricksContainer.appendChild(createBricks);
 }
 let bricks = document.querySelectorAll('.bricks');
+let breakSound = document.getElementById('break');
+let applauseSound = document.getElementById('applause');
+let loosingSound = document.getElementById('loosing');
 
 let mainContainerW = mainContainer.offsetWidth;
 let mainContainerH = mainContainer.offsetHeight;
@@ -84,6 +87,8 @@ let paddleCollide = () => {
     life -= 1;
     counter = 0;
     livesLabel.textContent = `Lives: ${life}`;
+    //play when loosing life
+    loosingSound.play();
     ballReset();
     clearInterval(timer);
 
@@ -144,11 +149,13 @@ let bricksCollide = () => {
       brick.offsetHeight
     );
     if (collidebrick) {
+      //add collide sound
+      breakSound.play();
       //when ball hits gold brick
-      if (brick.style.backgroundColor === 'gold') {
+      if (brick.style.backgroundcolor == 'gold') {
         score += 1000;
         //when ball hits red brick
-      } else if (brick.style.backgroundColor === 'red') {
+      } else if (brick.style.backgroundcolor == 'red') {
         score += 100;
         //when ball hit normal brick
       } else {
@@ -158,6 +165,8 @@ let bricksCollide = () => {
       scoreLabel.textContent = `Score: ${score}`;
       //hides brick when hit
       brick.style.visibility = 'hidden';
+      //game finish
+      gameFinish();
     }
   });
 };
@@ -197,7 +206,11 @@ let gameFinish = () => {
     }
   });
   if (finishCounter === bricks.length) {
+    //reset ball position
     ballReset();
+    //play applause
+    applauseSound.play();
+    //clear simulation
     clearInterval(timer);
     endGame.style.display = 'block';
     setTimeout(() => {
@@ -215,11 +228,20 @@ let changeBrickToRed = () => {
   const randomNum5 = Math.round(Math.random() * bricks.length);
   //adds 5 red brick after 5 seconds of life reset
   setTimeout(() => {
-    bricks[randomNum1].style.backgroundColor = 'red';
-    bricks[randomNum2].style.backgroundColor = 'red';
-    bricks[randomNum3].style.backgroundColor = 'red';
-    bricks[randomNum4].style.backgroundColor = 'red';
-    bricks[randomNum5].style.backgroundColor = 'red';
+    bricks[randomNum1].style.backgroundImage = "url('./img/kim.jpg')";
+    bricks[randomNum1].style.backgroundcolor = 'red';
+
+    bricks[randomNum2].style.backgroundImage = "url('./img/kim.jpg')";
+    bricks[randomNum2].style.backgroundcolor = 'red';
+
+    bricks[randomNum3].style.backgroundImage = "url('./img/kim.jpg')";
+    bricks[randomNum3].style.backgroundcolor = 'red';
+
+    bricks[randomNum4].style.backgroundImage = "url('./img/kim.jpg')";
+    bricks[randomNum4].style.backgroundcolor = 'red';
+
+    bricks[randomNum5].style.backgroundImage = "url('./img/kim.jpg')";
+    bricks[randomNum5].style.backgroundcolor = 'red';
   }, 5000);
 };
 
@@ -228,7 +250,8 @@ let changeBrickToGold = () => {
   const randomNum1 = Math.round(Math.random() * bricks.length);
   //adds 1 gold brick after 10 seconds of life reset
   setTimeout(() => {
-    bricks[randomNum1].style.backgroundColor = 'gold';
+    bricks[randomNum1].style.backgroundImage = "url('./img/donald2.jpg')";
+    bricks[randomNum1].style.backgroundcolor = 'gold';
   }, 10000);
 };
 

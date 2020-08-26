@@ -3,14 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Breakout Game</title>
   </head>
   <link rel="stylesheet" href="./styles.css" />
   <script src="./app.js" defer></script>
   <body>
+    <!-- Animation -->
+    <div class="p p-1"></div>
+    <div class="p p-2"></div>
+    <div class="p p-3"></div>
     <!-- HEADER -->
     <div class="header-container">
       <h2 class="score">Score: 0</h2>
+      <h1 class="header-title">Break Kim & Donald</h1>
       <h2 class="lives">Lives: 3</h2>
     </div>
 
@@ -29,5 +34,9 @@
         <!-- Paddle goes here -->
       </div>
     </div>
+    <!-- Audio -->
+    <audio src="./sound/break.mp3" id="break"></audio>
+    <audio src="./sound/applause.mp3" id="applause"></audio>
+    <audio src="./sound/loosing.mp3" id="loosing"></audio>
   </body>
 </html>
