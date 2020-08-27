@@ -123,6 +123,17 @@
   border-radius: 10px;
 }
 
+.volume-container {
+  width: 1000px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.volume {
+  color: lightcyan;
+  cursor: pointer;
+}
+
 @keyframes particleAnimation {
   from {
     left: -100px;

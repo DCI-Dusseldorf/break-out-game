@@ -223,6 +223,30 @@ let gameFinish = () => {
   }
 };
 
+///////////////////////////////GAME VOLUME///////////////////////////////
+let volOff = () => {
+  breakSound.pause();
+  applauseSound.pause();
+  loosingSound.pause();
+};
+let volOn = () => {
+  breakSound.play();
+  applauseSound.play();
+  loosingSound.play();
+};
+let volume = document.querySelector('.volume');
+volume.addEventListener('click', () => {
+  if (volume.classList.contains('fa-volume-off')) {
+    volOff();
+    volume.classList.remove('fa-volume-off');
+    volume.classList.add('fa-volume-up');
+  } else {
+    volOn();
+    volume.classList.remove('fa-volume-up');
+    volume.classList.add('fa-volume-off');
+  }
+});
+
 ///////////////////////////////CHANGE BRICK COLOR TO RED///////////////////////////////
 let changeBrickToRed = () => {
   const randomNum1 = Math.round(Math.random() * bricks.length);
