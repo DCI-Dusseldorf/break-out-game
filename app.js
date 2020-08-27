@@ -46,10 +46,10 @@ let paddleH = paddle.offsetHeight;
 let positionPaddle = (e) => {
   //make paddle move right
   if (e.code == 'ArrowRight') {
-    paddleX += 20;
+    paddleX += 30;
     paddle.style.left = `${paddleX}px`;
     if (paddleX >= mainContainerW - paddleW) {
-      paddleX -= 20;
+      paddleX -= 30;
     }
   }
   //make paddle move left
