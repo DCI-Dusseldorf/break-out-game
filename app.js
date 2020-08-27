@@ -237,11 +237,15 @@ let volOn = () => {
 let volume = document.querySelector('.volume');
 volume.addEventListener('click', () => {
   if (volume.classList.contains('fa-volume-off')) {
-    volOff();
+    if (space) {
+      volOff();
+    }
     volume.classList.remove('fa-volume-off');
     volume.classList.add('fa-volume-up');
   } else {
-    volOn();
+    if (space) {
+      volOff();
+    }
     volume.classList.remove('fa-volume-up');
     volume.classList.add('fa-volume-off');
   }
