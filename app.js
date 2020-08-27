@@ -28,6 +28,7 @@ let mainContainerH = mainContainer.offsetHeight;
 
 let counter = 0;
 let timer = null;
+let gameEnd = false;
 
 let moveX = 2 * (Math.random() > 0.5 ? 1 : -1);
 let moveY = -2;
@@ -93,6 +94,8 @@ let paddleCollide = () => {
     clearInterval(timer);
 
     if (life === 0) {
+      clearInterval(timer);
+      gameEnd = true;
       gameOver.style.display = 'block';
       setTimeout(() => {
         location.reload();
@@ -212,6 +215,7 @@ let gameFinish = () => {
     applauseSound.play();
     //clear simulation
     clearInterval(timer);
+    gameEnd = true;
     endGame.style.display = 'block';
     setTimeout(() => {
       location.reload();
@@ -257,7 +261,7 @@ let changeBrickToGold = () => {
 
 ///////////////////////////////BALL SIMULATION///////////////////////////////
 let space = document.addEventListener('keyup', (e) => {
-  if (e.code === 'Space' && counter === 0) {
+  if (e.code === 'Space' && counter === 0 && !gameEnd) {
     counter += 1;
     //remove instructions
     startGame.style.display = 'none';
