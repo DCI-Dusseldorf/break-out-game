@@ -19,6 +19,7 @@ for (let i = 0; i <= 59; i++) {
   bricksContainer.appendChild(createBricks);
 }
 let bricks = document.querySelectorAll('.bricks');
+let volume = document.querySelector('.volume');
 let breakSound = document.getElementById('break');
 let applauseSound = document.getElementById('applause');
 let loosingSound = document.getElementById('loosing');
@@ -89,7 +90,7 @@ let paddleCollide = () => {
     counter = 0;
     livesLabel.textContent = `Lives: ${life}`;
     //play when loosing life
-    loosingSound.play();
+    toggleLoosingSound();
     ballReset();
     clearInterval(timer);
 
@@ -153,7 +154,7 @@ let bricksCollide = () => {
     );
     if (collidebrick) {
       //add collide sound
-      breakSound.play();
+      toggleBreakSound();
       //when ball hits gold brick
       if (brick.style.backgroundcolor == 'gold') {
         score += 1000;
@@ -212,7 +213,7 @@ let gameFinish = () => {
     //reset ball position
     ballReset();
     //play applause
-    applauseSound.play();
+    toggleApplauseSound();
     //clear simulation
     clearInterval(timer);
     gameEnd = true;
@@ -224,32 +225,30 @@ let gameFinish = () => {
 };
 
 ///////////////////////////////GAME VOLUME///////////////////////////////
-// let volOff = () => {
-//   breakSound.pause();
-//   applauseSound.pause();
-//   loosingSound.pause();
-// };
-// let volOn = () => {
-//   breakSound.play();
-//   applauseSound.play();
-//   loosingSound.play();
-// };
-// let volume = document.querySelector('.volume');
-// volume.addEventListener('click', () => {
-//   if (volume.classList.contains('fa-volume-off')) {
-//     if (space) {
-//       volOff();
-//     }
-//     volume.classList.remove('fa-volume-off');
-//     volume.classList.add('fa-volume-up');
-//   } else {
-//     if (space) {
-//       volOff();
-//     }
-//     volume.classList.remove('fa-volume-up');
-//     volume.classList.add('fa-volume-off');
-//   }
-// });
+volume.addEventListener('click', () => {
+  volume.classList.toggle('fa-volume-up');
+});
+const toggleBreakSound = () => {
+  if (volume.classList.contains('fa-volume-up')) {
+    breakSound.play();
+  } else {
+    breakSound.pause();
+  }
+};
+const toggleApplauseSound = () => {
+  if (volume.classList.contains('fa-volume-up')) {
+    applauseSound.play();
+  } else {
+    applauseSound.pause();
+  }
+};
+const toggleLoosingSound = () => {
+  if (volume.classList.contains('fa-volume-up')) {
+    loosingSound.play();
+  } else {
+    loosingSound.pause();
+  }
+};
 
 ///////////////////////////////CHANGE BRICK COLOR TO RED///////////////////////////////
 let changeBrickToRed = () => {
