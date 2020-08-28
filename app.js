@@ -176,15 +176,15 @@ const bricksCollide = () => {
     if (collidebrick) {
       //add collide sound
       toggleBreakSound();
-      if (brick.style.backgroundColor == 'gold') {
+      if (brick.style.color == 'gold') {
         score += 1000;
-      } else if (brick.style.backgroundColor == 'yellow') {
+      } else if (brick.style.color == 'yellow') {
         score += 800;
-      } else if (brick.style.backgroundColor == 'green') {
+      } else if (brick.style.color == 'green') {
         score += 500;
-      } else if (brick.style.backgroundColor == 'blue') {
+      } else if (brick.style.color == 'blue') {
         score += 300;
-      } else if (brick.style.backgroundColor == 'red') {
+      } else if (brick.style.color == 'red') {
         score += 100;
       } else {
         score += 20;
@@ -290,19 +290,19 @@ const changeBrickToKim = () => {
   //adds 5 red brick after 5 seconds of life reset
   setTimeout(() => {
     bricks[randomNum1].style.backgroundImage = "url('./img/kim.jpg')";
-    bricks[randomNum1].style.backgroundColor = 'red';
+    bricks[randomNum1].style.color = 'red';
 
     bricks[randomNum2].style.backgroundImage = "url('./img/kim.jpg')";
-    bricks[randomNum2].style.backgroundColor = 'red';
+    bricks[randomNum2].style.color = 'red';
 
     bricks[randomNum3].style.backgroundImage = "url('./img/kim.jpg')";
-    bricks[randomNum3].style.backgroundColor = 'red';
+    bricks[randomNum3].style.color = 'red';
 
     bricks[randomNum4].style.backgroundImage = "url('./img/kim.jpg')";
-    bricks[randomNum4].style.backgroundColor = 'red';
+    bricks[randomNum4].style.color = 'red';
 
     bricks[randomNum5].style.backgroundImage = "url('./img/kim.jpg')";
-    bricks[randomNum5].style.backgroundColor = 'red';
+    bricks[randomNum5].style.color = 'red';
   }, 3000);
 };
 
@@ -315,16 +315,16 @@ const changeBrickToBoris = () => {
   //adds 5 red brick after 5 seconds of life reset
   setTimeout(() => {
     bricks[randomNum1].style.backgroundImage = "url('./img/boris.jpg')";
-    bricks[randomNum1].style.backgroundColor = 'blue';
+    bricks[randomNum1].style.color = 'blue';
 
     bricks[randomNum2].style.backgroundImage = "url('./img/boris.jpg')";
-    bricks[randomNum2].style.backgroundColor = 'blue';
+    bricks[randomNum2].style.color = 'blue';
 
     bricks[randomNum3].style.backgroundImage = "url('./img/boris.jpg')";
-    bricks[randomNum3].style.backgroundColor = 'blue';
+    bricks[randomNum3].style.color = 'blue';
 
     bricks[randomNum4].style.backgroundImage = "url('./img/boris.jpg')";
-    bricks[randomNum4].style.backgroundColor = 'blue';
+    bricks[randomNum4].style.color = 'blue';
   }, 5000);
 };
 
@@ -336,13 +336,13 @@ const changeBrickToPutin = () => {
   //adds 5 red brick after 5 seconds of life reset
   setTimeout(() => {
     bricks[randomNum1].style.backgroundImage = "url('./img/putin.jpg')";
-    bricks[randomNum1].style.backgroundColor = 'green';
+    bricks[randomNum1].style.color = 'green';
 
     bricks[randomNum2].style.backgroundImage = "url('./img/putin.jpg')";
-    bricks[randomNum2].style.backgroundColor = 'green';
+    bricks[randomNum2].style.color = 'green';
 
     bricks[randomNum3].style.backgroundImage = "url('./img/putin.jpg')";
-    bricks[randomNum3].style.backgroundColor = 'green';
+    bricks[randomNum3].style.color = 'green';
   }, 5000);
 };
 
@@ -353,10 +353,10 @@ const changeBrickToXi = () => {
   //adds 5 red brick after 5 seconds of life reset
   setTimeout(() => {
     bricks[randomNum1].style.backgroundImage = "url('./img/xi.jpg')";
-    bricks[randomNum1].style.backgroundColor = 'yellow';
+    bricks[randomNum1].style.color = 'yellow';
 
     bricks[randomNum2].style.backgroundImage = "url('./img/xi.jpg')";
-    bricks[randomNum2].style.backgroundColor = 'yellow';
+    bricks[randomNum2].style.color = 'yellow';
   }, 5000);
 };
 
@@ -366,6 +366,6 @@ const changeBrickToDonald = () => {
   //adds 1 gold brick after 10 seconds of life reset
   setTimeout(() => {
     bricks[randomNum1].style.backgroundImage = "url('./img/donald.jpg')";
-    bricks[randomNum1].style.backgroundColor = 'gold';
+    bricks[randomNum1].style.color = 'gold';
   }, 10000);
 };
