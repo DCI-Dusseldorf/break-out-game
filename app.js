@@ -51,10 +51,16 @@ const space = document.addEventListener('keyup', (e) => {
     counter += 1;
     //remove instructions
     startGame.style.display = 'none';
-    //change 5 bricks to red
-    changeBrickToRed();
-    //change brick to gold
-    changeBrickToGold();
+    //change 5 bricks to kim
+    changeBrickToKim();
+    //change 5 bricks to boris
+    changeBrickToBoris();
+    //change 5 bricks to putin
+    changeBrickToPutin();
+    //change 5 bricks to xi
+    changeBrickToXi();
+    //change brick to donald
+    changeBrickToDonald();
     //ball simulate speed
     timer = setInterval(ballSimulate, 750 / 100);
   }
@@ -170,13 +176,16 @@ const bricksCollide = () => {
     if (collidebrick) {
       //add collide sound
       toggleBreakSound();
-      //when ball hits gold brick
       if (brick.style.backgroundColor == 'gold') {
         score += 1000;
-        //when ball hits red brick
+      } else if (brick.style.backgroundColor == 'yellow') {
+        score += 800;
+      } else if (brick.style.backgroundColor == 'green') {
+        score += 500;
+      } else if (brick.style.backgroundColor == 'blue') {
+        score += 300;
       } else if (brick.style.backgroundColor == 'red') {
         score += 100;
-        //when ball hit normal brick
       } else {
         score += 20;
       }
@@ -272,7 +281,7 @@ const toggleLoosingSound = () => {
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO RED///////////////////////////////
-const changeBrickToRed = () => {
+const changeBrickToKim = () => {
   const randomNum1 = Math.round(Math.random() * bricks.length);
   const randomNum2 = Math.round(Math.random() * bricks.length);
   const randomNum3 = Math.round(Math.random() * bricks.length);
@@ -294,15 +303,69 @@ const changeBrickToRed = () => {
 
     bricks[randomNum5].style.backgroundImage = "url('./img/kim.jpg')";
     bricks[randomNum5].style.backgroundColor = 'red';
+  }, 3000);
+};
+
+///////////////////////////////CHANGE BRICK COLOR TO BLUE///////////////////////////////
+const changeBrickToBoris = () => {
+  const randomNum1 = Math.round(Math.random() * bricks.length);
+  const randomNum2 = Math.round(Math.random() * bricks.length);
+  const randomNum3 = Math.round(Math.random() * bricks.length);
+  const randomNum4 = Math.round(Math.random() * bricks.length);
+  //adds 5 red brick after 5 seconds of life reset
+  setTimeout(() => {
+    bricks[randomNum1].style.backgroundImage = "url('./img/boris.jpg')";
+    bricks[randomNum1].style.backgroundColor = 'blue';
+
+    bricks[randomNum2].style.backgroundImage = "url('./img/boris.jpg')";
+    bricks[randomNum2].style.backgroundColor = 'blue';
+
+    bricks[randomNum3].style.backgroundImage = "url('./img/boris.jpg')";
+    bricks[randomNum3].style.backgroundColor = 'blue';
+
+    bricks[randomNum4].style.backgroundImage = "url('./img/boris.jpg')";
+    bricks[randomNum4].style.backgroundColor = 'blue';
+  }, 5000);
+};
+
+///////////////////////////////CHANGE BRICK COLOR TO GREEN///////////////////////////////
+const changeBrickToPutin = () => {
+  const randomNum1 = Math.round(Math.random() * bricks.length);
+  const randomNum2 = Math.round(Math.random() * bricks.length);
+  const randomNum3 = Math.round(Math.random() * bricks.length);
+  //adds 5 red brick after 5 seconds of life reset
+  setTimeout(() => {
+    bricks[randomNum1].style.backgroundImage = "url('./img/putin.jpg')";
+    bricks[randomNum1].style.backgroundColor = 'green';
+
+    bricks[randomNum2].style.backgroundImage = "url('./img/putin.jpg')";
+    bricks[randomNum2].style.backgroundColor = 'green';
+
+    bricks[randomNum3].style.backgroundImage = "url('./img/putin.jpg')";
+    bricks[randomNum3].style.backgroundColor = 'green';
+  }, 5000);
+};
+
+///////////////////////////////CHANGE BRICK COLOR TO YELLOW///////////////////////////////
+const changeBrickToXi = () => {
+  const randomNum1 = Math.round(Math.random() * bricks.length);
+  const randomNum2 = Math.round(Math.random() * bricks.length);
+  //adds 5 red brick after 5 seconds of life reset
+  setTimeout(() => {
+    bricks[randomNum1].style.backgroundImage = "url('./img/xi.jpg')";
+    bricks[randomNum1].style.backgroundColor = 'yellow';
+
+    bricks[randomNum2].style.backgroundImage = "url('./img/xi.jpg')";
+    bricks[randomNum2].style.backgroundColor = 'yellow';
   }, 5000);
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO GOLD///////////////////////////////
-const changeBrickToGold = () => {
+const changeBrickToDonald = () => {
   const randomNum1 = Math.round(Math.random() * bricks.length);
   //adds 1 gold brick after 10 seconds of life reset
   setTimeout(() => {
-    bricks[randomNum1].style.backgroundImage = "url('./img/donald2.jpg')";
+    bricks[randomNum1].style.backgroundImage = "url('./img/donald.jpg')";
     bricks[randomNum1].style.backgroundColor = 'gold';
   }, 10000);
 };
