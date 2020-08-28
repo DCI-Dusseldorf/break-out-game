@@ -303,7 +303,7 @@ const changeBrickToKim = () => {
 
     bricks[randomNum5].style.backgroundImage = "url('./img/kim.jpg')";
     bricks[randomNum5].style.color = 'red';
-  }, 3000);
+  }, 2000);
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO BLUE///////////////////////////////
@@ -325,7 +325,7 @@ const changeBrickToBoris = () => {
 
     bricks[randomNum4].style.backgroundImage = "url('./img/boris.jpg')";
     bricks[randomNum4].style.color = 'blue';
-  }, 5000);
+  }, 4000);
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO GREEN///////////////////////////////
@@ -343,7 +343,7 @@ const changeBrickToPutin = () => {
 
     bricks[randomNum3].style.backgroundImage = "url('./img/putin.jpg')";
     bricks[randomNum3].style.color = 'green';
-  }, 5000);
+  }, 6000);
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO YELLOW///////////////////////////////
@@ -357,7 +357,7 @@ const changeBrickToXi = () => {
 
     bricks[randomNum2].style.backgroundImage = "url('./img/xi.jpg')";
     bricks[randomNum2].style.color = 'yellow';
-  }, 5000);
+  }, 8000);
 };
 
 ///////////////////////////////CHANGE BRICK COLOR TO GOLD///////////////////////////////
